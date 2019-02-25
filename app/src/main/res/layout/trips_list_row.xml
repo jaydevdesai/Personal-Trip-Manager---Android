@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/tripCard"
+    android:layout_marginTop="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/colorWhite"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="6dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/tripCoverImage"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:src="@drawable/wallpaper1"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tripTitle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/app_name"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="@color/colorText"
+                android:textAlignment="textStart"
+                android:gravity="center_vertical|start"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/rubik_regular"
+                android:background="@color/colorWhiteTransparent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tripCoverImage"
+                />
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tripDates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/dates"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:background="@color/colorWhiteTransparent"
+                android:textColor="@color/colorText"
+                android:textAlignment="textEnd"
+                android:gravity="center_vertical|end"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="@id/tripCoverImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

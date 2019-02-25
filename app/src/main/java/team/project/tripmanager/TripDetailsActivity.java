@@ -1,0 +1,101 @@
+package team.project.tripmanager;
+
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class TripDetailsActivity extends AppCompatActivity {
+
+    AppCompatTextView tripTitleTv, tripDatesTv, placeNameTv;
+    RecyclerView cardsListView;
+    ArrayList<String> cardsList;
+    ArrayList<Integer> cardsListImage;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_trip_details);
+        TripDetails tripDetails = (TripDetails) getIntent().getSerializableExtra("TripDetails");
+
+        tripTitleTv = findViewById(R.id.tripTitle);
+        tripDatesTv = findViewById(R.id.tripDates);
+        placeNameTv = findViewById(R.id.placeName);
+        cardsListView = findViewById(R.id.cardsList);
+
+        cardsList = new ArrayList<String>(Arrays.asList("Group", "Reservations", "Documents","Expenses", "Notes", "Shopping-List"));
+        cardsListImage = new ArrayList<Integer>(Arrays.asList(R.drawable.ic_group_black_24dp,R.drawable.ic_train_black_24dp,R.drawable.ic_folder_black_24dp,R.drawable.ic_attach_money_black_24dp,R.drawable.ic_note_add_black_24dp,R.drawable.ic_add_shopping_cart_black_24dp));
+        CardsListHolder cardsListHolder = new CardsListHolder();
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+        cardsListView.setLayoutManager(layoutManager);
+        cardsListView.setItemAnimator(new DefaultItemAnimator());
+        cardsListView.setAdapter(cardsListHolder);
+
+        tripTitleTv.setText(tripDetails.getTripName());
+        try {
+            String tripdates = tripDetails.getFormattedStartDate() + " - " + tripDetails.getFormattedEndDate() +".";
+            tripDatesTv.setText(tripdates);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        placeNameTv.setText("Visiting "+tripDetails.getPlaceName()+".");
+    }
+
+    public class CardsListHolder extends RecyclerView.Adapter<TripDetailsActivity.CardsListHolder.MyViewHolder> {
+
+        class MyViewHolder extends RecyclerView.ViewHolder{
+
+            AppCompatTextView cardTitleTv;
+            AppCompatImageView cardImage;
+            CardView cardView;
+
+            MyViewHolder(@NonNull View itemView) {
+                super(itemView);
+                cardTitleTv = itemView.findViewById(R.id.cardTitle);
+                cardImage = itemView.findViewById(R.id.cardImage);
+                cardView = itemView.findViewById(R.id.cardView);
+            }
+        }
+
+        @NonNull
+        @Override
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View itemView = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.cards_list_row, viewGroup, false);
+            return new MyViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
+            holder.cardTitleTv.setText(cardsList.get(i));
+            holder.cardImage.setImageResource(cardsListImage.get(i));
+        }
+
+
+        @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
+
+        @Override
+        public int getItemCount() {
+            return cardsList.size();
+        }
+    }
+}
