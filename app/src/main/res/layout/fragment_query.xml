@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/queryList"
+        android:scrollbars="none"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:background="@drawable/rounded_corner_layout"
+        app:layout_constraintTop_toBottomOf="@id/customTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/createQueryBtn"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/ic_add_circle_outline_black_24dp"
+        android:tint="@color/colorText"
+        android:paddingTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:scaleType="fitCenter"
+        android:background="@drawable/create_button_pink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <RelativeLayout
+        android:id="@+id/customTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/queryIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_question_answer_black_24dp"
+            android:tint="@color/colorWhite"
+            android:padding="2dp"
+            android:scaleType="fitCenter"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/queryIcon"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="6dp"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/rubik_bold"
+            android:text="@string/queries" />
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -9,7 +9,7 @@
     <string name="login">Log In</string>
     <string name="signup">Sign Up</string>
     <string name="reset_password">Forgot password? Reset here.</string>
-    <string name="WS_Url">http://192.168.43.73:80/TripManager/</string>
+    <string name="WS_Url">http://192.168.2.106/TripManager/</string>
     <string name="Place_API">AIzaSyDgi-HGKLaLiB9ckSj1vRepV5EoXt5GPrQ</string>
     <string name="trip_name">Trip Name</string>
     <string name="select_place">Select Place</string>
@@ -24,4 +24,10 @@
     <string name="dates">Dates</string>
     <string name="placeName">Place Name</string>
     <string name="or">OR</string>
+    <string name="explore">Explore</string>
+    <string name="username">Username</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
+    <string name="query">Query</string>
+    <string name="jaydev_desai">Jaydev Desai</string>
+    <string name="queries">Queries</string>
 </resources>

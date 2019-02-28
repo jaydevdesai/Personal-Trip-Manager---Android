@@ -154,7 +154,7 @@ public class TripsFragment extends Fragment {
             AppCompatTextView tripTitleTv, tripDatesTv;
             CardView tripCard;
 
-            public MyViewHolder(@NonNull View itemView) {
+            MyViewHolder(@NonNull View itemView) {
                 super(itemView);
                 tripTitleTv = itemView.findViewById(R.id.tripTitle);
                 tripDatesTv = itemView.findViewById(R.id.tripDates);

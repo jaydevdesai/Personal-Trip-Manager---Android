@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:background="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +43,7 @@
             android:text="@string/trips" />
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/createTripBtn"
-            android:layout_width="84dp"
+            android:layout_width="72dp"
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_add_circle_outline_black_24dp"
