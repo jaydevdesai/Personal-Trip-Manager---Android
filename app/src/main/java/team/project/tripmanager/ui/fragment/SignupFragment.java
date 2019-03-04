@@ -1,13 +1,10 @@
-package team.project.tripmanager;
+package team.project.tripmanager.ui.fragment;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Patterns;
@@ -16,20 +13,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import team.project.tripmanager.R;
+import team.project.tripmanager.logger.Logger;
+import team.project.tripmanager.model.AuthResponse;
 
-public class SignupFragment extends Fragment {
+
+public class SignupFragment extends BaseFragment {
 
     AppCompatButton logInBtn, signUpBtn;
     AppCompatEditText emailEdt, passwordEdt, confirmPasswordEdt;
     Fragment loginFragment, homeFragment;
     TextInputLayout emailInput, passwordInput, confirmPasswordInput;
     SharedPreferences sharedPreferences;
+    private Logger logger;
 
     @NonNull
     @Override
@@ -70,7 +71,7 @@ public class SignupFragment extends Fragment {
                         confirmPasswordInput.setError("Password and Confirm password doesn't match");
                         //Toast.makeText(getActivity(),"Password and Confirm password doesn't match",Toast.LENGTH_SHORT).show();
                     } else{
-                        new SignUp().execute("");
+                        signUpUserToServer(emailEdt.getText().toString(), passwordEdt.getText().toString());
                     }
                 } else {
                     Toast.makeText(getActivity(),"Enter All Fields",Toast.LENGTH_SHORT).show();
@@ -82,59 +83,26 @@ public class SignupFragment extends Fragment {
 
     }
 
-    private class SignUp extends AsyncTask<String, Void,String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String aUrl = Objects.requireNonNull(getActivity()).getString(R.string.WS_Url) +"UserSignUp.php";
-            String result = null;
-            try {
-                WebService webService = new WebService(aUrl,createJson());
-                result = webService.PostJSon();
-                JSONObject jsonObject = new JSONObject(result);
-                result = jsonObject.getString("result");
-
-            } catch (JSONException | IOException e) {
-                result = "conn";
-                e.printStackTrace();
+    private void signUpUserToServer(String email, String password) {
+        environment.getAPIService().signUp(email, password).enqueue(new Callback<AuthResponse>() {
+            @Override
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                if (response.body() != null) {
+                    environment.getPrefs().storeAuthTokenResponse(response.body());
+                    HomeFragment homeFragment = new HomeFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                    Toast.makeText(getActivity(), "Sign up Successfull", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Unknown error occured", Toast.LENGTH_SHORT).show();
+                    logger.debug("response.body() is null");
+                }
             }
-            return result;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            switch (result) {
-                case "true":
-                    sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("loginDetails", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor edit = sharedPreferences.edit();
-                    edit.putBoolean("loggedIn",true);
-                    edit.putString("email", Objects.requireNonNull(emailEdt.getText()).toString());
-                    edit.apply();
-                    Fragment homeFragment = new HomeFragment();
-                    Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, homeFragment).commit();
-                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    Toast.makeText(getActivity(), "Signed Up", Toast.LENGTH_SHORT).show();
-                    break;
-                case "already":
-                    Toast.makeText(getActivity(), "Email Address already registered", Toast.LENGTH_SHORT).show();
-                    break;
-                case "conn":
-                    Toast.makeText(getActivity(), "Check Internet Connection.", Toast.LENGTH_SHORT).show();
-                default:
-                    Toast.makeText(getActivity(), "Error.", Toast.LENGTH_SHORT).show();
-                    break;
+            @Override
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
+                logger.error(t);
+                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
-        }
+        });
     }
-
-    private JSONObject createJson() throws JSONException{
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.accumulate("email", Objects.requireNonNull(emailEdt.getText()).toString());
-        jsonObject.accumulate("password", Objects.requireNonNull(passwordEdt.getText()).toString());
-        return jsonObject;
-    }
-
-
-
 }

@@ -1,4 +1,4 @@
-package team.project.tripmanager;
+package team.project.tripmanager.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ExploreFragment extends Fragment {
+import team.project.tripmanager.R;
+
+public class ExploreFragment extends BaseFragment {
 
     RecyclerView postsListView;
     PostsListHolder postsListHolder;

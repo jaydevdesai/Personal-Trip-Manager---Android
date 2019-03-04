@@ -1,8 +1,5 @@
-package team.project.tripmanager;
+package team.project.tripmanager.ui.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,19 +14,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.Objects;
 
-public class LoginFragment extends Fragment {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import team.project.tripmanager.R;
+import team.project.tripmanager.logger.Logger;
+import team.project.tripmanager.model.AuthResponse;
+
+public class LoginFragment extends BaseFragment {
 
     AppCompatTextView forgetPassword;
     AppCompatEditText emailEdt, passwordEdt;
     AppCompatButton logInBtn, signUpBtn;
-    SharedPreferences sharedPreferences;
     TextInputLayout emailInput, passwordInput;
+    private Logger logger = new Logger(getClass());
 
     @Nullable
     @Override
@@ -53,8 +53,8 @@ public class LoginFragment extends Fragment {
                         emailInput.setError("Invalid Email Address");
                         //Toast.makeText(getActivity(),"Invalid Email Address",Toast.LENGTH_SHORT).show();
                     } else{
-                        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("loginDetails", Context.MODE_PRIVATE);
-                        new CheckLogin().execute("");
+                        //sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("loginDetails", Context.MODE_PRIVATE);
+                        checkLoginToServer(emailEdt.getText().toString(), passwordEdt.getText().toString());
                     }
                 } else {
                     //Toast.makeText(getActivity(),"Enter All Fields",Toast.LENGTH_SHORT).show();
@@ -77,54 +77,26 @@ public class LoginFragment extends Fragment {
         return v;
     }
 
-    private class CheckLogin extends AsyncTask<String, Void,String>{
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String aUrl = Objects.requireNonNull(getActivity()).getString(R.string.WS_Url) +"UserLogIn.php";
-            String result = null;
-            try {
-                WebService webService = new WebService(aUrl,createJson());
-                result = webService.PostJSon();
-                JSONObject jsonObject = new JSONObject(result);
-                result = jsonObject.getString("result");
-
-            } catch (JSONException | IOException e) {
-                result = "conn";
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            switch (result) {
-                case "true":
-                    SharedPreferences.Editor edit = sharedPreferences.edit();
-                    edit.putBoolean("loggedIn",true);
-                    edit.putString("email", Objects.requireNonNull(emailEdt.getText()).toString());
-                    edit.apply();
-                    Fragment homeFragment = new HomeFragment();
-                    Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, homeFragment).commit();
+    private void checkLoginToServer(String email, String password) {
+        environment.getAPIService().login(email, password).enqueue(new Callback<AuthResponse>() {
+            @Override
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                if (response.body() != null) {
+                    environment.getPrefs().storeAuthTokenResponse(response.body());
+                    HomeFragment homeFragment = new HomeFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                     Toast.makeText(getActivity(), "Logged In", Toast.LENGTH_SHORT).show();
-                    break;
-                case "false":
-                    Toast.makeText(getActivity(), "Incorrect Email or Password.", Toast.LENGTH_SHORT).show();
-                    break;
-                case "conn":
-                    Toast.makeText(getActivity(), "Check Internet Connection.", Toast.LENGTH_SHORT).show();
-                default:
-                    Toast.makeText(getActivity(), "Error.", Toast.LENGTH_SHORT).show();
-                    break;
+                } else {
+                    Toast.makeText(getActivity(), "Unknown error occured", Toast.LENGTH_SHORT).show();
+                    logger.debug("response.body() is null");
+                }
             }
-        }
-    }
 
-    private JSONObject createJson() throws JSONException{
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.accumulate("email", Objects.requireNonNull(emailEdt.getText()).toString());
-        jsonObject.accumulate("password", Objects.requireNonNull(passwordEdt.getText()).toString());
-        return jsonObject;
+            @Override
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
+                logger.error(t);
+                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

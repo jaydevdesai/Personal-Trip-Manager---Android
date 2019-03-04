@@ -1,4 +1,4 @@
-package team.project.tripmanager;
+package team.project.tripmanager.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class QueryFragment extends Fragment {
+import team.project.tripmanager.R;
+
+public class QueryFragment extends BaseFragment {
 
     RecyclerView queryListView;
     QueryListHolder queryListHolder;

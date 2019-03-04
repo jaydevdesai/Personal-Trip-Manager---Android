@@ -1,6 +1,5 @@
-package team.project.tripmanager;
+package team.project.tripmanager.ui.activity;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,18 +7,20 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import team.project.tripmanager.R;
+import team.project.tripmanager.model.Trip;
+import team.project.tripmanager.utils.DateUtils;
 
 public class TripDetailsActivity extends AppCompatActivity {
 
@@ -32,7 +33,7 @@ public class TripDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_details);
-        TripDetails tripDetails = (TripDetails) getIntent().getSerializableExtra("TripDetails");
+        Trip tripDetails = (Trip) getIntent().getSerializableExtra("TripDetails");
 
         tripTitleTv = findViewById(R.id.tripTitle);
         tripDatesTv = findViewById(R.id.tripDates);
@@ -49,7 +50,7 @@ public class TripDetailsActivity extends AppCompatActivity {
 
         tripTitleTv.setText(tripDetails.getTripName());
         try {
-            String tripdates = tripDetails.getFormattedStartDate() + " - " + tripDetails.getFormattedEndDate() +".";
+            String tripdates = DateUtils.getFormattedDate(tripDetails.getStartDate(), tripDetails.getEndDate());
             tripDatesTv.setText(tripdates);
         } catch (ParseException e) {
             e.printStackTrace();

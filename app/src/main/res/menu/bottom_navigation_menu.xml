@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_bottom_explore"
+        android:icon="@drawable/ic_explore_black_24dp"
+        android:title="@string/explore" />
+    <item
+        android:id="@+id/menu_bottom_trips"
+        android:icon="@drawable/ic_business_center_black_24dp"
+        android:title="@string/trips" />
+    <item
+        android:id="@+id/menu_bottom_queries"
+        android:icon="@drawable/ic_question_answer_black_24dp"
+        android:title="@string/queries" />
+</menu>
