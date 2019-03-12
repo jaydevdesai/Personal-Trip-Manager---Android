@@ -5,8 +5,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import team.project.tripmanager.model.AuthResponse;
-import team.project.tripmanager.model.Trip;
-import team.project.tripmanager.model.TripResponse;
+import team.project.tripmanager.model.CommonResponse;
 
 public interface APIService {
     @POST("login")
@@ -20,12 +19,15 @@ public interface APIService {
                              @Field("password") String password);
 
     @POST("get_trips")
-    Call<TripResponse> getTrips();
+    Call<CommonResponse> getTrips();
 
     @POST("create_trip")
     @FormUrlEncoded
-    Call<TripResponse> createTrip(@Field("tripName") String tripName,
-                                  @Field("placeName") String placeName,
-                                  @Field("startDate") String startDate,
-                                  @Field("endDate") String endDate);
+    Call<CommonResponse> createTrip(@Field("tripName") String tripName,
+                                    @Field("placeName") String placeName,
+                                    @Field("startDate") String startDate,
+                                    @Field("endDate") String endDate);
+
+    @POST("get_queries")
+    Call<CommonResponse> getQueries();
 }

@@ -32,7 +32,7 @@ import team.project.tripmanager.R;
 import team.project.tripmanager.core.TMApplication;
 import team.project.tripmanager.core.TMEnvironment;
 import team.project.tripmanager.logger.Logger;
-import team.project.tripmanager.model.TripResponse;
+import team.project.tripmanager.model.CommonResponse;
 
 import static android.app.Activity.RESULT_CANCELED;
 
@@ -120,9 +120,9 @@ public class CreateTripFragment extends DialogFragment {
 
     private void createTripRequestToServer(String tripName, String placeName, String startDate, String endDate) {
         TMEnvironment environment = ((TMApplication) getActivity().getApplicationContext()).getEnvironment();
-        environment.getAPIService().createTrip(tripName, placeName, startDate, endDate).enqueue(new Callback<TripResponse>() {
+        environment.getAPIService().createTrip(tripName, placeName, startDate, endDate).enqueue(new Callback<CommonResponse>() {
             @Override
-            public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     getDialog().dismiss();
@@ -133,7 +133,7 @@ public class CreateTripFragment extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<TripResponse> call, Throwable t) {
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
                 logger.error(t);
                 Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }

@@ -52,12 +52,11 @@ public class HomeFragment extends BaseFragment implements BottomNavigationView.O
 
     @Override
     public void onPageSelected(int i) {
-        logger.debug("onPageSelected " + i);
         bottomNavigationView.setSelectedItemId(viewPagerAdapter.getItemResId(i));
     }
 
     @Override
     public void onPageScrollStateChanged(int i) {
-        logger.debug("onPageScrollStateChanged " + i);
+
     }
 }

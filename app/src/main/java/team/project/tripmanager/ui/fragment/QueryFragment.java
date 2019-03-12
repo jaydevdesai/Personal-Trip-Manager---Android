@@ -3,7 +3,6 @@ package team.project.tripmanager.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,53 +10,60 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import team.project.tripmanager.R;
+import team.project.tripmanager.adapter.QueryAdapter;
+import team.project.tripmanager.logger.Logger;
+import team.project.tripmanager.model.CommonResponse;
+import team.project.tripmanager.model.Query;
 
 public class QueryFragment extends BaseFragment {
 
-    RecyclerView queryListView;
-    QueryListHolder queryListHolder;
+    private RecyclerView queryListView;
+    private QueryAdapter queryAdapter;
+    private Logger logger = new Logger(getClass());
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_query, container,false);
+        View v = inflater.inflate(R.layout.fragment_query, container, false);
 
         queryListView = v.findViewById(R.id.queryList);
-        queryListHolder = new QueryListHolder();
-        RecyclerView.LayoutManager layoutManager =  new GridLayoutManager(getActivity(),1);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
+
 
         queryListView.setLayoutManager(layoutManager);
         queryListView.setItemAnimator(new DefaultItemAnimator());
-        queryListView.setAdapter(queryListHolder);
+
+        fetchQueriesFromServer();
 
         return v;
     }
 
-    public class QueryListHolder extends RecyclerView.Adapter<QueryListHolder.MyViewHolder>{
-
-        class MyViewHolder extends RecyclerView.ViewHolder {
-            MyViewHolder(@NonNull View itemView) {
-                super(itemView);
+    private void fetchQueriesFromServer() {
+        environment.getAPIService().getQueries().enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                logger.debug("response");
+                if (!response.isSuccessful() && response.body() != null && response.body().getQueries() != null) {
+                    showSomethingWentWrong();
+                    logger.debug("response not successfull");
+                } else {
+                    List<Query> queries = response.body().getQueries();
+                    queryAdapter = new QueryAdapter(queries);
+                    queryListView.setAdapter(queryAdapter);
+                }
             }
-        }
 
-        @NonNull
-        @Override
-        public QueryListHolder.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View itemView = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.query_cards_list_row, viewGroup, false);
-            return new MyViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull QueryListHolder.MyViewHolder myViewHolder, int i) {
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return 5;
-        }
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                logger.error(t);
+                showSomethingWentWrong();
+            }
+        });
     }
 }

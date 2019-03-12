@@ -21,7 +21,7 @@ import retrofit2.Response;
 import team.project.tripmanager.R;
 import team.project.tripmanager.adapter.TripAdapter;
 import team.project.tripmanager.logger.Logger;
-import team.project.tripmanager.model.TripResponse;
+import team.project.tripmanager.model.CommonResponse;
 
 
 public class TripsFragment extends BaseFragment {
@@ -71,9 +71,9 @@ public class TripsFragment extends BaseFragment {
     }
 
     private void fetchTripsFromServer() {
-        environment.getAPIService().getTrips().enqueue(new Callback<TripResponse>() {
+        environment.getAPIService().getTrips().enqueue(new Callback<CommonResponse>() {
             @Override
-            public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 if (response.body() == null) {
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                     logger.debug("response.body() is null");
@@ -85,7 +85,7 @@ public class TripsFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call<TripResponse> call, Throwable t) {
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
                 logger.error(t);
                 Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
