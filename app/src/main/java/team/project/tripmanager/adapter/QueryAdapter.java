@@ -6,17 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.ParseException;
 import java.util.List;
 
 import team.project.tripmanager.R;
 import team.project.tripmanager.model.Query;
+import team.project.tripmanager.module.prefs.MainPrefs;
+import team.project.tripmanager.utils.DateUtils;
 import team.project.tripmanager.viewholder.QueryViewHolder;
 
 public class QueryAdapter extends RecyclerView.Adapter<QueryViewHolder> {
     private List<Query> queryList;
-
-    public QueryAdapter(List<Query> queryList) {
+    private MainPrefs mainPrefs;
+    public QueryAdapter(List<Query> queryList, MainPrefs mainPrefs) {
         this.queryList = queryList;
+        this.mainPrefs = mainPrefs;
     }
 
     @NonNull
@@ -30,9 +34,22 @@ public class QueryAdapter extends RecyclerView.Adapter<QueryViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull QueryViewHolder queryViewHolder, int i) {
         Query query = queryList.get(i);
-        queryViewHolder.setName(query.getName());
+
+        String name = query.getName();
+        if(query.getEmail().equals(mainPrefs.getEmail())) name = "You";
+        queryViewHolder.setName(name);
+
         queryViewHolder.setQueryText(query.getQueryText());
-        queryViewHolder.setTime(query.getCreationTime());
+        queryViewHolder.initializeClickListener(query, mainPrefs);
+
+        try {
+            String formattedDate = null;
+            formattedDate = DateUtils.getFormattedDate(query.getCreationTime(), "dd MMM");
+            queryViewHolder.setTime(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

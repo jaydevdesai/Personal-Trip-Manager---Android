@@ -1,11 +1,14 @@
 package team.project.tripmanager.module.prefs;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.io.Serializable;
 
 import team.project.tripmanager.logger.Logger;
 import team.project.tripmanager.model.AuthResponse;
@@ -43,7 +46,17 @@ public class MainPrefs {
         if (auth == null || !auth.isSuccess()) {
             return null;
         } else {
-            return auth.accessToken;
+            return auth.getAccessToken();
+        }
+    }
+
+    @Nullable
+    public String getEmail() {
+        final AuthResponse auth = getCurrentAuth();
+        if (auth == null || !auth.isSuccess()) {
+            return null;
+        } else {
+            return auth.getEmail();
         }
     }
 

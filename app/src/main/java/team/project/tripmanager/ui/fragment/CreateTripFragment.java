@@ -19,7 +19,10 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -33,6 +36,7 @@ import team.project.tripmanager.core.TMApplication;
 import team.project.tripmanager.core.TMEnvironment;
 import team.project.tripmanager.logger.Logger;
 import team.project.tripmanager.model.CommonResponse;
+import team.project.tripmanager.model.ErrorResponse;
 
 import static android.app.Activity.RESULT_CANCELED;
 
@@ -54,6 +58,7 @@ public class CreateTripFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_create_trip, container, false);
 
         tripNameEdt = v.findViewById(R.id.tripNameEdt);
@@ -126,6 +131,14 @@ public class CreateTripFragment extends DialogFragment {
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     getDialog().dismiss();
+                } else if(response.errorBody() != null){
+                    try {
+                        Gson gson = new GsonBuilder().setLenient().create();
+                        ErrorResponse errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                        Toast.makeText(getActivity(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     logger.debug("Unsuccessful response");
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -161,7 +174,7 @@ public class CreateTripFragment extends DialogFragment {
         }
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == AUTOCOMPLETE_REQUEST_CODE && data != null){
             try{
@@ -174,7 +187,7 @@ public class CreateTripFragment extends DialogFragment {
         } else if (resultCode == RESULT_CANCELED) {
             // The user canceled the operation.
         }
-    }
+    }*/
 
 
 }

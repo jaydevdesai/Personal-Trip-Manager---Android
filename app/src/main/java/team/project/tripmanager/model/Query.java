@@ -3,7 +3,10 @@ package team.project.tripmanager.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Query {
+import java.io.Serializable;
+
+public class Query implements Serializable {
+
     @SerializedName("query_id")
     @Expose
     private Integer queryId;
@@ -30,6 +33,10 @@ public class Query {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {

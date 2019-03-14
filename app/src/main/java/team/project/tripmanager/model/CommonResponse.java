@@ -18,6 +18,10 @@ public class CommonResponse {
     @Expose
     private List<Query> queries = null;
 
+    @SerializedName("replies")
+    @Expose
+    private List<QueryReply> query_replies = null;
+
     public String getMessage() {
         return message;
     }
@@ -29,4 +33,6 @@ public class CommonResponse {
     public List<Query> getQueries() {
         return queries;
     }
+
+    public List<QueryReply> getQueryReplies() { return query_replies; }
 }

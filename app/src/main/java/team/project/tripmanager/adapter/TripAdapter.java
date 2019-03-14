@@ -36,7 +36,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripViewHolder> {
         Trip trip = trips.get(position);
         tripViewHolder.setTripTitle(trip.getTripName());
         try {
-            String formattedDate = DateUtils.getFormattedDate(trip.getStartDate(), trip.getEndDate());
+            String formattedDate = DateUtils.getFormattedDatePeriod(trip.getStartDate(), trip.getEndDate());
             tripViewHolder.setStartEndDate(formattedDate);
         } catch (ParseException e) {
             e.printStackTrace();

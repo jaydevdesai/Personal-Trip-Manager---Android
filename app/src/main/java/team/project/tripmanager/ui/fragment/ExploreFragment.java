@@ -15,54 +15,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import team.project.tripmanager.R;
+import team.project.tripmanager.adapter.ExploreAdapter;
 
 public class ExploreFragment extends BaseFragment {
 
     RecyclerView postsListView;
-    PostsListHolder postsListHolder;
+    ExploreAdapter exploreAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_explore, container,false);
         postsListView = v.findViewById(R.id.postsList);
-        postsListHolder = new PostsListHolder();
+        exploreAdapter = new ExploreAdapter();
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),1);
         postsListView.setLayoutManager(layoutManager);
         postsListView.setItemAnimator(new DefaultItemAnimator());
-        postsListView.setAdapter(postsListHolder);
+        postsListView.setAdapter(exploreAdapter);
         return v;
     }
 
-    public class PostsListHolder extends RecyclerView.Adapter<PostsListHolder.MyViewHolder>{
 
-        class MyViewHolder extends RecyclerView.ViewHolder{
-
-            MyViewHolder(@NonNull View itemView) {
-                super(itemView);
-            }
-        }
-
-        @NonNull
-        @Override
-        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View itemView = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.explore_cards_list_row, viewGroup, false);
-            return new MyViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return 10;
-        }
-
-
-
-
-    }
 }

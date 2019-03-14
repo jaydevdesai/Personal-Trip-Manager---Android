@@ -30,4 +30,17 @@ public interface APIService {
 
     @POST("get_queries")
     Call<CommonResponse> getQueries();
+
+    @POST("post_query")
+    @FormUrlEncoded
+    Call<CommonResponse> postQuery(@Field("query_text") String query_text);
+
+    @POST("get_query_replies")
+    @FormUrlEncoded
+    Call<CommonResponse> getQueriesReplies(@Field("query_id") Integer query_id);
+
+    @POST("post_query_reply")
+    @FormUrlEncoded
+    Call<CommonResponse> postQueryReply(@Field("query_id") Integer query_id,
+                                        @Field("reply_text") String reply_text);
 }

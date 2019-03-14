@@ -50,7 +50,7 @@ public class TripDetailsActivity extends AppCompatActivity {
 
         tripTitleTv.setText(tripDetails.getTripName());
         try {
-            String tripdates = DateUtils.getFormattedDate(tripDetails.getStartDate(), tripDetails.getEndDate());
+            String tripdates = DateUtils.getFormattedDatePeriod(tripDetails.getStartDate(), tripDetails.getEndDate());
             tripDatesTv.setText(tripdates);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -78,7 +78,7 @@ public class TripDetailsActivity extends AppCompatActivity {
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View itemView = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.cards_list_row, viewGroup, false);
+                    .inflate(R.layout.trip_details_cards_list_row, viewGroup, false);
             return new MyViewHolder(itemView);
         }
 

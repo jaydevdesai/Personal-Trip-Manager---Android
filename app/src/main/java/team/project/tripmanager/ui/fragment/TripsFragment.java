@@ -4,9 +4,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,15 +30,14 @@ import team.project.tripmanager.R;
 import team.project.tripmanager.adapter.TripAdapter;
 import team.project.tripmanager.logger.Logger;
 import team.project.tripmanager.model.CommonResponse;
+import team.project.tripmanager.model.ErrorResponse;
 
 
 public class TripsFragment extends BaseFragment {
 
-    AppCompatEditText placePickerEdt;
-    int PLACE_PICKER_REQUEST = 1;
-
     AppCompatImageView tripCoverImage;
     AppCompatImageButton createTripBtn;
+    AppCompatTextView errorTxt;
     RecyclerView tripsListView;
     private Logger logger = new Logger(getClass());
 
@@ -43,29 +50,12 @@ public class TripsFragment extends BaseFragment {
         tripsListView = v.findViewById(R.id.tripsList);
         tripCoverImage = v.findViewById(R.id.tripCoverImage);
         createTripBtn = v.findViewById(R.id.createTripBtn);
+        errorTxt = v.findViewById(R.id.errorTxt);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
         tripsListView.setLayoutManager(layoutManager);
         tripsListView.setItemAnimator(new DefaultItemAnimator());
 
 
-        createTripBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final CreateTripFragment createTripFragment = CreateTripFragment.newInstance();
-                createTripFragment.setCancelable(false);
-                createTripFragment.show(getActivity().getSupportFragmentManager().beginTransaction(), "createTrip");
-                getActivity().getSupportFragmentManager().executePendingTransactions();
-                createTripFragment.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        getActivity().getSupportFragmentManager().beginTransaction().remove(createTripFragment).commit();
-//                        new GetTrips().execute();
-                        fetchTripsFromServer();
-                    }
-                });
-            }
-        });
-        //new GetTrips().execute();
         fetchTripsFromServer();
         return v;
     }
@@ -75,12 +65,19 @@ public class TripsFragment extends BaseFragment {
             @Override
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 if (response.body() == null) {
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    try {
+                        errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                        errorTxt.setText(errorResponse.getMessage());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     logger.debug("response.body() is null");
                     return;
                 }
                 Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 TripAdapter tripAdapter = new TripAdapter(response.body().getTrips());
+                errorTxt.setVisibility(View.GONE);
+                tripsListView.setVisibility(View.VISIBLE);
                 tripsListView.setAdapter(tripAdapter);
             }
 

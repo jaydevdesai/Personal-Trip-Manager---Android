@@ -30,4 +30,12 @@
     <string name="query">Query</string>
     <string name="jaydev_desai">Jaydev Desai</string>
     <string name="queries">Queries</string>
+    <string name="no_queries">Oops! World has no query.</string>
+    <string name="post">Post</string>
+    <string name="what_s_your_query">What\'s your query?</string>
+    <string name="let_the_world_help_you">Let the world help you.</string>
+    <string name="looks_like_you_don_t_plan_your_trips">Looks like you don\'t plan your trips.</string>
+    <string name="replies">Replies</string>
+    <string name="reply">Reply</string>
+    <string name="reply_query">Reply Query</string>
 </resources>

@@ -13,6 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -21,6 +25,7 @@ import retrofit2.Response;
 import team.project.tripmanager.R;
 import team.project.tripmanager.logger.Logger;
 import team.project.tripmanager.model.AuthResponse;
+import team.project.tripmanager.model.ErrorResponse;
 
 
 public class SignupFragment extends BaseFragment {
@@ -30,7 +35,7 @@ public class SignupFragment extends BaseFragment {
     Fragment loginFragment, homeFragment;
     TextInputLayout emailInput, passwordInput, confirmPasswordInput;
     SharedPreferences sharedPreferences;
-    private Logger logger;
+    private Logger logger = new Logger(getClass());
 
     @NonNull
     @Override
@@ -91,10 +96,18 @@ public class SignupFragment extends BaseFragment {
                     environment.getPrefs().storeAuthTokenResponse(response.body());
                     HomeFragment homeFragment = new HomeFragment();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-                    Toast.makeText(getActivity(), "Sign up Successfull", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "Unknown error occured", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Sign up Successful", Toast.LENGTH_SHORT).show();
+                } else if(response.errorBody() != null){
+                    try {
+                        errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                        Toast.makeText(getActivity(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     logger.debug("response.body() is null");
+                } else {
+                    Toast.makeText(getActivity(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                    logger.debug("response.errorBody() is null");
                 }
             }
 
