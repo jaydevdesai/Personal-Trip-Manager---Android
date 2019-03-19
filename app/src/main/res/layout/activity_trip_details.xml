@@ -59,6 +59,7 @@
             android:layout_height="48dp"
             android:text="@string/placeName"
             android:paddingStart="16dp"
+            android:paddingEnd="8dp"
             android:background="@color/colorWhiteTransparent"
             android:textColor="@color/colorText"
             android:textAlignment="textStart"

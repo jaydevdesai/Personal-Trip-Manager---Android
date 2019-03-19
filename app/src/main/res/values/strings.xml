@@ -38,4 +38,6 @@
     <string name="replies">Replies</string>
     <string name="reply">Reply</string>
     <string name="reply_query">Reply Query</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
 </resources>
