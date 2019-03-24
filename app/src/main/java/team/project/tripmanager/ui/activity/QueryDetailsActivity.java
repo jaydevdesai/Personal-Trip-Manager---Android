@@ -35,7 +35,7 @@ import team.project.tripmanager.module.prefs.MainPrefs;
 import team.project.tripmanager.ui.fragment.BaseFragment;
 import team.project.tripmanager.utils.DateUtils;
 
-public class QueryDetailsActivity extends AppCompatActivity {
+public class QueryDetailsActivity extends BaseActivity {
 
     AppCompatTextView userNameTV, queryTextTV, queryDate;
     AppCompatImageView userPicIV;
@@ -46,9 +46,7 @@ public class QueryDetailsActivity extends AppCompatActivity {
     private static MainPrefs mainPrefs;
     TMEnvironment tmEnvironment;
 
-    public static void setMainPrefs(MainPrefs mainPrefs) {
-        QueryDetailsActivity.mainPrefs = mainPrefs;
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class QueryDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_query_details);
 
         tmEnvironment = ((TMApplication)this.getApplicationContext()).getEnvironment();
-
+        mainPrefs = environment.getPrefs();
         query = (Query) getIntent().getSerializableExtra("QueryDetails");
         userNameTV = findViewById(R.id.userName);
         queryDate =findViewById(R.id.queryDate);

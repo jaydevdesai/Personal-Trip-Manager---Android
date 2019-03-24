@@ -36,11 +36,10 @@ public class QueryViewHolder extends RecyclerView.ViewHolder {
         dateTv.setText(creationTime);
     }
 
-    public void initializeClickListener(Query query, MainPrefs mainPrefs){
+    public void initializeClickListener(Query query){
         queryCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QueryDetailsActivity.setMainPrefs(mainPrefs);
                 Intent intent = new Intent(queryCard.getContext(), QueryDetailsActivity.class);
                 intent.putExtra("QueryDetails", query);
                 queryCard.getContext().startActivity(intent);

@@ -1,6 +1,7 @@
 package team.project.tripmanager.ui.fragment;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,7 +41,7 @@ import team.project.tripmanager.model.ErrorResponse;
 
 import static android.app.Activity.RESULT_CANCELED;
 
-public class CreateTripFragment extends DialogFragment {
+public class CreateTripFragment extends BaseDialogFragment {
 
     int AUTOCOMPLETE_REQUEST_CODE = 1, FLAG = 0, BtnFlag = 0;
     String startDateString, endDateString;
@@ -55,12 +56,13 @@ public class CreateTripFragment extends DialogFragment {
         return new CreateTripFragment();
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_create_trip, container, false);
-
+        getDialog().setCanceledOnTouchOutside(false);
         tripNameEdt = v.findViewById(R.id.tripNameEdt);
         selectPlaceEdt = v.findViewById(R.id.selectPlaceEdt);
         startDateEdt = v.findViewById(R.id.startDateEdt);
@@ -124,7 +126,6 @@ public class CreateTripFragment extends DialogFragment {
     }
 
     private void createTripRequestToServer(String tripName, String placeName, String startDate, String endDate) {
-        TMEnvironment environment = ((TMApplication) getActivity().getApplicationContext()).getEnvironment();
         environment.getAPIService().createTrip(tripName, placeName, startDate, endDate).enqueue(new Callback<CommonResponse>() {
             @Override
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
@@ -133,8 +134,7 @@ public class CreateTripFragment extends DialogFragment {
                     getDialog().dismiss();
                 } else if(response.errorBody() != null){
                     try {
-                        Gson gson = new GsonBuilder().setLenient().create();
-                        ErrorResponse errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                        errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
                         Toast.makeText(getActivity(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();

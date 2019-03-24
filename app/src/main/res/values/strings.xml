@@ -40,4 +40,12 @@
     <string name="reply_query">Reply Query</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
+    <string name="edit_trip">Edit Trip</string>
+    <string name="title_activity_reservation">ReservationActivity</string>
+    <string name="document">Document</string>
+    <string name="add">Add</string>
+    <string name="add_your_notes_here">Add your notes here.</string>
+    <string name="save">Save</string>
+    <string name="title_activity_shopping_list">ShoppingListActivity</string>
+    <string name="item_1">Item 1</string>
 </resources>

@@ -1,6 +1,7 @@
 package team.project.tripmanager.ui.fragment;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 
 import java.text.ParseException;
@@ -24,7 +26,7 @@ import team.project.tripmanager.logger.Logger;
 import team.project.tripmanager.model.Trip;
 import team.project.tripmanager.utils.DateUtils;
 
-public class EditTripFragment extends DialogFragment {
+public class EditTripFragment extends BaseDialogFragment {
 
     int FLAG = 0, BtnFlag = 0;
     String startDateString, endDateString;
@@ -46,7 +48,7 @@ public class EditTripFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_trip, container, false);
-
+        getDialog().setCanceledOnTouchOutside(false);
         tripNameEdt = v.findViewById(R.id.tripNameEdt);
         selectPlaceEdt = v.findViewById(R.id.selectPlaceEdt);
         startDateEdt = v.findViewById(R.id.startDateEdt);

@@ -40,7 +40,7 @@ public class QueryAdapter extends RecyclerView.Adapter<QueryViewHolder> {
         queryViewHolder.setName(name);
 
         queryViewHolder.setQueryText(query.getQueryText());
-        queryViewHolder.initializeClickListener(query, mainPrefs);
+        queryViewHolder.initializeClickListener(query);
 
         try {
             String formattedDate = null;

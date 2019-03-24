@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorWhiteTransparent"
-    android:paddingTop="16dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
+    android:background="@color/colorWhite"
+    android:layout_gravity="center_vertical"
+    android:layout_margin="16dp"
+    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/createTripTitle"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:textSize="24sp"
@@ -20,43 +24,46 @@
         android:textColor="@color/colorPrimary"
         android:gravity="center_vertical|start"
         android:text="@string/create_new_trip"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tripNameInput"/>
+        app:layout_constraintBottom_toTopOf="@id/tripNameInput"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tripNameInput"
-        android:layout_width="260dp"
-        android:layout_height="72dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:errorEnabled="true"
         app:helperText="@string/required_field"
         android:theme="@style/TextInputLayoutAppearance"
-        app:layout_constraintTop_toBottomOf="@id/createTripTitle"
+        app:layout_constraintBottom_toTopOf="@id/selectPlaceInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/selectPlaceInput">
+        app:layout_constraintVertical_chainStyle="packed">
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/tripNameEdt"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="@string/trip_name"
+            android:textColor="@color/colorText"
             android:textColorHint="@color/colorPrimaryLight"/>
     </android.support.design.widget.TextInputLayout>
 
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/selectPlaceInput"
-        android:layout_width="260dp"
-        android:layout_height="72dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:errorEnabled="true"
         app:helperText="@string/required_field"
         android:theme="@style/TextInputLayoutAppearance"
-        app:layout_constraintTop_toBottomOf="@id/tripNameInput"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/selectPlaceEdt"
             android:layout_width="match_parent"
@@ -70,20 +77,21 @@
 
     <LinearLayout
         android:id="@+id/dateInputs"
-        android:layout_width="260dp"
-        android:layout_height="64dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:baselineAligned="false"
         android:background="@color/colorWhite"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectPlaceInput">
+        app:layout_constraintTop_toBottomOf="@id/selectPlaceInput"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/startDateInput"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:errorEnabled="true"
             android:theme="@style/TextInputLayoutAppearance"
             android:layout_weight="1">
@@ -104,7 +112,7 @@
         <android.support.design.widget.TextInputLayout
             android:id="@+id/endDateInput"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:errorEnabled="true"
             android:theme="@style/TextInputLayoutAppearance"
             android:layout_weight="1">
@@ -126,23 +134,25 @@
 
     <LinearLayout
         android:id="@+id/buttonsLayout"
-        android:layout_width="260dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:background="@color/colorWhite"
         android:orientation="horizontal"
         android:gravity="end"
+        app:layout_constraintTop_toBottomOf="@id/dateInputs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateInputs">
+        app:layout_constraintVertical_chainStyle="packed">
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:layout_margin="8dp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:textAllCaps="true"
             android:background="@color/colorWhite"
             android:textColor="@color/colorPrimary"
@@ -151,9 +161,12 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/createBtn"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/create"
             android:layout_margin="8dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:gravity="center"
             android:textAllCaps="true"
             android:background="@color/colorWhite"
             android:textColor="@color/colorPrimary"
@@ -163,3 +176,4 @@
 
 
 </android.support.constraint.ConstraintLayout>
+</FrameLayout>

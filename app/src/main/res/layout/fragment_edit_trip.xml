@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorWhiteTransparent"
-    android:paddingTop="16dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+<android.support.constraint.ConstraintLayout
+    android:background="@color/colorWhite"
+    android:layout_margin="16dp"
+    android:padding="16dp"
+    android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/createTripTitle"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:textSize="24sp"
@@ -19,7 +22,7 @@
         android:textAlignment="textStart"
         android:textColor="@color/colorPrimary"
         android:gravity="center_vertical|start"
-        android:text="@string/create_new_trip"
+        android:text="@string/edit_trip"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +30,7 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tripNameInput"
-        android:layout_width="260dp"
+        android:layout_width="0dp"
         android:layout_height="72dp"
         android:layout_marginTop="8dp"
         app:errorEnabled="true"
@@ -42,13 +45,14 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="@string/trip_name"
+            android:textColor="@color/colorText"
             android:textColorHint="@color/colorPrimaryLight"/>
     </android.support.design.widget.TextInputLayout>
 
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/selectPlaceInput"
-        android:layout_width="260dp"
+        android:layout_width="0dp"
         android:layout_height="72dp"
         android:layout_marginTop="8dp"
         app:errorEnabled="true"
@@ -70,7 +74,7 @@
 
     <LinearLayout
         android:id="@+id/dateInputs"
-        android:layout_width="260dp"
+        android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginTop="8dp"
         android:baselineAligned="false"
@@ -126,8 +130,8 @@
 
     <RelativeLayout
         android:id="@+id/buttonsLayout"
-        android:layout_width="260dp"
-        android:layout_height="46dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:baselineAligned="false"
         android:background="@color/colorWhite"
@@ -138,12 +142,13 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/deleteBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
             android:text="@string/delete"
+            android:gravity="center"
+            android:textStyle="bold"
             android:layout_margin="8dp"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/cancelBtn"
+            android:layout_alignParentEnd="true"
             android:textAllCaps="true"
             android:background="@color/colorWhite"
             android:textColor="@color/colorPrimary"
@@ -151,11 +156,14 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/cancelBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:layout_margin="8dp"
+            android:gravity="center"
+            android:textStyle="bold"
             android:layout_toStartOf="@id/updateBtn"
+            android:layout_below="@id/deleteBtn"
             android:textAllCaps="true"
             android:background="@color/colorWhite"
             android:textColor="@color/colorPrimary"
@@ -163,11 +171,14 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/updateBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
             android:text="@string/update"
             android:layout_margin="8dp"
+            android:gravity="center"
+            android:textStyle="bold"
             android:textAllCaps="true"
+            android:layout_below="@id/deleteBtn"
             android:layout_alignParentEnd="true"
             android:background="@color/colorWhite"
             android:textColor="@color/colorPrimary"
@@ -177,3 +188,4 @@
 
 
 </android.support.constraint.ConstraintLayout>
+</FrameLayout>

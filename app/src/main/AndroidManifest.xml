@@ -17,7 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".ui.activity.QueryDetailsActivity"></activity>
+        <activity
+            android:name=".ui.activity.ShoppingListActivity"
+            android:label="@string/title_activity_shopping_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.activity.NoteActivity" />
+        <activity
+            android:name=".ui.activity.ImagesActivity"
+            android:label="@string/title_activity_reservation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.QueryDetailsActivity" />
         <activity android:name=".ui.activity.TripDetailsActivity" />
         <activity
             android:name=".ui.activity.MainActivity"

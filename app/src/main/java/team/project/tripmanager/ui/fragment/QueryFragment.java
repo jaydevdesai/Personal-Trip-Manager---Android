@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,13 +57,16 @@ public class QueryFragment extends BaseFragment {
         postQueryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postQueryContainer.setVisibility(View.VISIBLE);
-                PostQueryFragment postQueryFragment = new PostQueryFragment();
+                PostQueryFragment postQueryFragment = PostQueryFragment.newInstance();
                 postQueryFragment.setTargetFragment(QueryFragment.this,1);
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-                        .add(R.id.postQueryContainer, postQueryFragment)
-                        .addToBackStack("postQuery")
-                        .commit();
+                postQueryFragment.show(getActivity().getSupportFragmentManager(),"postQuery");
+                getActivity().getSupportFragmentManager().executePendingTransactions();
+                postQueryFragment.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        getActivity().getSupportFragmentManager().beginTransaction().remove(postQueryFragment).commit();
+                    }
+                });
             }
         });
 
@@ -71,10 +75,8 @@ public class QueryFragment extends BaseFragment {
         return v;
     }
 
-    public void refreshQueries(int code){
-        if(code == 1) fetchQueriesFromServer();
-        postQueryContainer.setVisibility(View.GONE);
-        //Toast.makeText(getActivity(), "Refreshed", Toast.LENGTH_SHORT).show();
+    public void refreshQueries(Boolean code){
+        if(code) fetchQueriesFromServer();
     }
 
     private void fetchQueriesFromServer() {
@@ -93,10 +95,15 @@ public class QueryFragment extends BaseFragment {
                     queryListView.setAdapter(queryAdapter);
                 } else if(response.errorBody() != null){
                     try {
+                        logger.debug(response.errorBody().string());
                         errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
                         //Toast.makeText(getActivity(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         errorTxt.setText(errorResponse.getMessage());
+
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    catch(JsonSyntaxException e) {
                         e.printStackTrace();
                     }
                     logger.debug("response.body() is null");

@@ -10,4 +10,5 @@
     <color name="colorPrimaryTransparent">#640336ff</color>
     <color name="colorWhiteTransparent">#96ffffff</color>
     <color name="colorBlackTransparent">#96000000</color>
+    <color name="buttonDisableColor">@android:color/darker_gray</color>
 </resources>
