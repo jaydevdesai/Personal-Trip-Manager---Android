@@ -11,7 +11,7 @@ import java.util.Objects;
 
 import team.project.tripmanager.R;
 
-public class NoteActivity extends AppCompatActivity {
+public class NoteActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

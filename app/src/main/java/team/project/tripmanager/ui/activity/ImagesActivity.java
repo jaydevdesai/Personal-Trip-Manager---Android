@@ -12,7 +12,7 @@ import java.util.Objects;
 import team.project.tripmanager.R;
 import team.project.tripmanager.ui.fragment.ImagesListFragment;
 
-public class ImagesActivity extends AppCompatActivity {
+public class ImagesActivity extends BaseActivity {
 
     Toolbar toolbar;
     String page;

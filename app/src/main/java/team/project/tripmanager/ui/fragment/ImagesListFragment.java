@@ -16,7 +16,7 @@ import team.project.tripmanager.R;
 import team.project.tripmanager.adapter.ImagesAdapter;
 
 
-public class ImagesListFragment extends Fragment {
+public class ImagesListFragment extends BaseFragment {
 
     RecyclerView reservationListView;
 

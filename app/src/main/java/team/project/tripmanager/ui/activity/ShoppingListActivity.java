@@ -17,7 +17,7 @@ import java.util.Objects;
 import team.project.tripmanager.R;
 import team.project.tripmanager.adapter.ShopListAdapter;
 
-public class ShoppingListActivity extends AppCompatActivity {
+public class ShoppingListActivity extends BaseActivity {
 
     RecyclerView recyclerView;
 
