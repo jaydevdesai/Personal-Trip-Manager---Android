@@ -3,6 +3,7 @@ package team.project.tripmanager.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,5 +23,9 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         environment = ((TMApplication)getApplicationContext()).getEnvironment();
+    }
+
+    protected void showSomethingWentWrong() {
+            Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
     }
 }

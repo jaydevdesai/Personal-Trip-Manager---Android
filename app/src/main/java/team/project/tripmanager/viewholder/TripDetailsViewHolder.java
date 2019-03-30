@@ -9,8 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import team.project.tripmanager.R;
-import team.project.tripmanager.ui.activity.ImagesActivity;
+import team.project.tripmanager.ui.activity.DocumentsActivity;
 import team.project.tripmanager.ui.activity.NoteActivity;
+import team.project.tripmanager.ui.activity.ReservationActivity;
 import team.project.tripmanager.ui.activity.ShoppingListActivity;
 
 public class TripDetailsViewHolder extends RecyclerView.ViewHolder {
@@ -34,14 +35,20 @@ public class TripDetailsViewHolder extends RecyclerView.ViewHolder {
         cardImage.setImageResource(image);
     }
 
-    public void initiateClick(String page){
+    public void initiateClick(String page, Integer tripId){
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent;
                 switch (page) {
-                    case "Reservations" : case "Documents":
-                        intent = new Intent(cardView.getContext(), ImagesActivity.class);
+                    case "Reservations" :
+                        intent = new Intent(cardView.getContext(), ReservationActivity.class);
+                        intent.putExtra("page", page);
+                        intent.putExtra("tripId", tripId);
+                        cardView.getContext().startActivity(intent);
+                        break;
+                    case "Documents":
+                        intent = new Intent(cardView.getContext(), DocumentsActivity.class);
                         intent.putExtra("page", page);
                         cardView.getContext().startActivity(intent);
                         break;

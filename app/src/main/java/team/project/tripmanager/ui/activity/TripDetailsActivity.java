@@ -50,7 +50,7 @@ public class TripDetailsActivity extends BaseActivity {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
         cardsListView.setLayoutManager(layoutManager);
         cardsListView.setItemAnimator(new DefaultItemAnimator());
-        cardsListView.setAdapter(new TripDetailsAdapter());
+        cardsListView.setAdapter(new TripDetailsAdapter(tripDetails.getId()));
 
         tripTitleTv.setText(tripDetails.getTripName());
         try {

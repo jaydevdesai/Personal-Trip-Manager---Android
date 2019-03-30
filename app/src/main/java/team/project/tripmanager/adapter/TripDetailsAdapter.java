@@ -15,8 +15,13 @@ import team.project.tripmanager.viewholder.TripDetailsViewHolder;
 
 public class TripDetailsAdapter extends RecyclerView.Adapter<TripDetailsViewHolder> {
 
+    private final Integer tripId;
     private ArrayList<String> cardsList = new ArrayList<String>(Arrays.asList("Reservations", "Documents","Expenses", "Notes", "Shopping-List"));
     private ArrayList<Integer> cardsListImage = new ArrayList<Integer>(Arrays.asList(R.drawable.ic_train_black_24dp,R.drawable.ic_folder_black_24dp,R.drawable.ic_attach_money_black_24dp,R.drawable.ic_note_add_black_24dp,R.drawable.ic_add_shopping_cart_black_24dp));
+
+    public TripDetailsAdapter(Integer tripId) {
+        this.tripId = tripId;
+    }
 
     @NonNull
     @Override
@@ -30,7 +35,7 @@ public class TripDetailsAdapter extends RecyclerView.Adapter<TripDetailsViewHold
     public void onBindViewHolder(@NonNull TripDetailsViewHolder tripDetailsViewHolder, int i) {
         tripDetailsViewHolder.setCardTitle(cardsList.get(i));
         tripDetailsViewHolder.setCardImage(cardsListImage.get(i));
-        tripDetailsViewHolder.initiateClick(cardsList.get(i));
+        tripDetailsViewHolder.initiateClick(cardsList.get(i), tripId);
     }
 
     @Override

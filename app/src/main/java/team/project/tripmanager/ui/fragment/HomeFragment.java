@@ -1,6 +1,8 @@
 package team.project.tripmanager.ui.fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,12 +15,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import java.util.Objects;
 
 import team.project.tripmanager.R;
 import team.project.tripmanager.adapter.ViewPagerAdapter;
 import team.project.tripmanager.logger.Logger;
+import team.project.tripmanager.ui.activity.ProfileActivity;
 
 public class HomeFragment extends BaseFragment implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
@@ -29,6 +33,8 @@ public class HomeFragment extends BaseFragment implements BottomNavigationView.O
     AppCompatTextView topTitleTV;
     AppCompatImageView topTitleIconIV;
     AppCompatImageButton createTripBtn;
+    private ImageButton profieBtn;
+
 
     @Nullable
     @Override
@@ -41,6 +47,15 @@ public class HomeFragment extends BaseFragment implements BottomNavigationView.O
 
         viewPager = view.findViewById(R.id.viewPager);
         bottomNavigationView = view.findViewById(R.id.bottom_navigation);
+        profieBtn = view.findViewById(R.id.fh_ib_profile);
+        profieBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         viewPagerAdapter = new ViewPagerAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager());
         viewPagerAdapter.addFragment(R.id.menu_bottom_explore, new ExploreFragment());

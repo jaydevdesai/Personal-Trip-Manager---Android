@@ -1,9 +1,13 @@
 package team.project.tripmanager.api;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import team.project.tripmanager.model.AuthResponse;
 import team.project.tripmanager.model.CommonResponse;
 
@@ -16,7 +20,7 @@ public interface APIService {
     @POST("sign_up")
     @FormUrlEncoded
     Call<AuthResponse> signUp(@Field("email") String email,
-                             @Field("password") String password);
+                              @Field("password") String password);
 
     @POST("get_trips")
     Call<CommonResponse> getTrips();
@@ -43,4 +47,22 @@ public interface APIService {
     @FormUrlEncoded
     Call<CommonResponse> postQueryReply(@Field("query_id") Integer query_id,
                                         @Field("reply_text") String reply_text);
+
+    @POST("get_documents")
+    Call<CommonResponse> getDocuments();
+
+    @Multipart
+    @POST("upload_document")
+    Call<CommonResponse> uploadDocument(@Part("document_name") RequestBody documentName,
+                                        @Part MultipartBody.Part documentImage);
+
+    @POST("get_reservations")
+    @FormUrlEncoded
+    Call<CommonResponse> getReservations(@Field("trip_id") Integer tripId);
+
+    @Multipart
+    @POST("upload_reservation")
+    Call<CommonResponse> uploadReservation(@Part("trip_id") RequestBody tripId,
+                                           @Part("reservation_name") RequestBody reservationName,
+                                           @Part MultipartBody.Part reservationImage);
 }

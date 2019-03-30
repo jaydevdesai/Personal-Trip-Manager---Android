@@ -22,6 +22,14 @@ public class CommonResponse {
     @Expose
     private List<QueryReply> query_replies = null;
 
+    @SerializedName("documents")
+    @Expose
+    private List<Document> documents = null;
+
+    @SerializedName("reservations")
+    @Expose
+    private List<Reservation> reservations = null;
+
     public String getMessage() {
         return message;
     }
@@ -35,4 +43,12 @@ public class CommonResponse {
     }
 
     public List<QueryReply> getQueryReplies() { return query_replies; }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
 }
