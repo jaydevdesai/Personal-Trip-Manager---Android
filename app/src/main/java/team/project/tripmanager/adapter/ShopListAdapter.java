@@ -6,10 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import team.project.tripmanager.R;
+import team.project.tripmanager.model.Shopping;
 import team.project.tripmanager.viewholder.ShopListViewHolder;
 
 public class ShopListAdapter extends RecyclerView.Adapter<ShopListViewHolder> {
+    private List<Shopping> shoppingList;
+
+    public ShopListAdapter(List<Shopping> shoppingList) {
+        this.shoppingList = shoppingList;
+    }
+
     @NonNull
     @Override
     public ShopListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -20,11 +29,13 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ShopListViewHolder shopListViewHolder, int i) {
-
+        Shopping shopping = shoppingList.get(i);
+        shopListViewHolder.setItemName(shopping.getItemName());
+        shopListViewHolder.setBought(shopping.getBought());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return shoppingList.size();
     }
 }

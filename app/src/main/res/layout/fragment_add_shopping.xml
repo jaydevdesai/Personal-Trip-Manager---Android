@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:background="@color/colorWhite"
+        android:padding="16dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/createTripTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="center_vertical|start"
+            android:text="@string/add_shopping_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/itemNameInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/itemNameInput"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="8dp"
+            android:theme="@style/TextInputLayoutAppearance"
+            app:errorEnabled="true"
+            app:helperText="@string/required_field"
+            app:layout_constraintBottom_toTopOf="@id/selectPlaceInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/createTripTitle">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/itemNameEdt"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/item_name"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorPrimaryLight" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/boughtCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/bought_label"
+            android:buttonTint="@color/colorPrimary"
+            android:fontFamily="@font/rubik_regular"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/itemNameInput" />
+
+        <RelativeLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@color/colorWhite"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/boughtCheck">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/cancelBtn"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/deleteBtn"
+                android:layout_margin="8dp"
+                android:layout_toStartOf="@id/addBtn"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/addBtn"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/deleteBtn"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="8dp"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:text="@string/add"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

@@ -64,7 +64,7 @@ public class DocumentsActivity extends BaseActivity {
                 }
                 if (response.body() != null && response.body().getDocuments() != null) {
                     List<Document> documents = response.body().getDocuments();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.reserveContainer, new ImagesListFragment(documents)).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.reserveContainer, new ImagesListFragment(documents)).commitAllowingStateLoss();
                 } else {
                     logger.debug("getDocuments null");
                 }

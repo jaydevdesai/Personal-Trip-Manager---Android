@@ -75,4 +75,13 @@ public interface APIService {
     Call<CommonResponse> updateNote(@Field("tripId") Integer tripId,
                                     @Field("noteId") Integer noteId,
                                     @Field("noteText") String noteText);
+    @POST("get_shopping_list")
+    @FormUrlEncoded
+    Call<CommonResponse> getShoppingList(@Field("trip_id") Integer tripId);
+
+    @POST("add_shopping_item")
+    @FormUrlEncoded
+    Call<CommonResponse> addShoppingItem(@Field("trip_id") Integer tripId,
+                                    @Field("item_name") String itemName,
+                                    @Field("bought") Boolean bought);
 }

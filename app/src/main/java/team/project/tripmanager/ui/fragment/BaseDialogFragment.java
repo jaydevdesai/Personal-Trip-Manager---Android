@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,6 +43,18 @@ public class BaseDialogFragment extends DialogFragment {
         setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle);
         if (getActivity() != null) {
             environment = ((TMApplication)getActivity().getApplicationContext()).getEnvironment();
+        }
+    }
+
+    protected void showSomethingWentWrong() {
+        showToast("Something went wrong!");
+    }
+
+    protected void showToast(String text) {
+        if (getActivity() != null) {
+            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        } else {
+            logger.warn("getActivity() is null");
         }
     }
 }

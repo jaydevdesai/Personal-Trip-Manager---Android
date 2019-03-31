@@ -59,6 +59,7 @@ public class TripDetailsViewHolder extends RecyclerView.ViewHolder {
                         break;
                     case "Shopping-List" :
                         intent = new Intent(cardView.getContext(), ShoppingListActivity.class);
+                        intent.putExtra("tripId", tripId);
                         cardView.getContext().startActivity(intent);
                         break;
                     default:

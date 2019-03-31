@@ -34,6 +34,10 @@ public class CommonResponse {
     @Expose
     private Note note;
 
+    @SerializedName("shopping_list")
+    @Expose
+    private List<Shopping> shoppingList = null;
+
     public String getMessage() {
         return message;
     }
@@ -58,5 +62,9 @@ public class CommonResponse {
 
     public Note getNote() {
         return note;
+    }
+
+    public List<Shopping> getShoppingList() {
+        return shoppingList;
     }
 }
