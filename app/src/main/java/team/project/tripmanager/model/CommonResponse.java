@@ -30,6 +30,10 @@ public class CommonResponse {
     @Expose
     private List<Reservation> reservations = null;
 
+    @SerializedName("note")
+    @Expose
+    private Note note;
+
     public String getMessage() {
         return message;
     }
@@ -50,5 +54,9 @@ public class CommonResponse {
 
     public List<Reservation> getReservations() {
         return reservations;
+    }
+
+    public Note getNote() {
+        return note;
     }
 }

@@ -54,6 +54,7 @@ public class TripDetailsViewHolder extends RecyclerView.ViewHolder {
                         break;
                     case "Notes" :
                         intent = new Intent(cardView.getContext(), NoteActivity.class);
+                        intent.putExtra("tripId", tripId);
                         cardView.getContext().startActivity(intent);
                         break;
                     case "Shopping-List" :

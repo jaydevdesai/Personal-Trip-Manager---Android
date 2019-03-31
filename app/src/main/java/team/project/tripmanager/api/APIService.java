@@ -65,4 +65,14 @@ public interface APIService {
     Call<CommonResponse> uploadReservation(@Part("trip_id") RequestBody tripId,
                                            @Part("reservation_name") RequestBody reservationName,
                                            @Part MultipartBody.Part reservationImage);
+
+    @POST("get_note")
+    @FormUrlEncoded
+    Call<CommonResponse> getNote(@Field("tripId") Integer tripId);
+
+    @POST("update_note")
+    @FormUrlEncoded
+    Call<CommonResponse> updateNote(@Field("tripId") Integer tripId,
+                                    @Field("noteId") Integer noteId,
+                                    @Field("noteText") String noteText);
 }

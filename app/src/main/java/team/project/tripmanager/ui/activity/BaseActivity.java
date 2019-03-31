@@ -15,17 +15,21 @@ import team.project.tripmanager.model.ErrorResponse;
 
 public class BaseActivity extends AppCompatActivity {
     protected TMEnvironment environment;
-    private Logger logger = new Logger(getClass());
     protected ErrorResponse errorResponse;
     protected Gson gson = new GsonBuilder().setLenient().create();
+    private Logger logger = new Logger(getClass());
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        environment = ((TMApplication)getApplicationContext()).getEnvironment();
+        environment = ((TMApplication) getApplicationContext()).getEnvironment();
     }
 
     protected void showSomethingWentWrong() {
-            Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+        showToast("Something went wrong!");
+    }
+
+    protected void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }
