@@ -23,6 +23,10 @@ public class Trip implements Serializable {
     @Expose
     private String endDate;
 
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +65,9 @@ public class Trip implements Serializable {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
     }
 }

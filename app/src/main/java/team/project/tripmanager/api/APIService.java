@@ -10,6 +10,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import team.project.tripmanager.model.AuthResponse;
 import team.project.tripmanager.model.CommonResponse;
+import team.project.tripmanager.model.Trip;
 
 public interface APIService {
     @POST("login")
@@ -84,4 +85,8 @@ public interface APIService {
     Call<CommonResponse> addShoppingItem(@Field("trip_id") Integer tripId,
                                     @Field("item_name") String itemName,
                                     @Field("bought") Boolean bought);
+
+    @POST("get_explore_trips")
+    @FormUrlEncoded
+    Call<CommonResponse> getExploreTrips(@Field("last_created_at") String lastCreatedAt);
 }
