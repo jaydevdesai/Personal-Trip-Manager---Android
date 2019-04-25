@@ -10,6 +10,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import team.project.tripmanager.model.AuthResponse;
 import team.project.tripmanager.model.CommonResponse;
+import team.project.tripmanager.model.Note;
+import team.project.tripmanager.model.Profile;
 import team.project.tripmanager.model.Trip;
 
 public interface APIService {
@@ -35,6 +37,9 @@ public interface APIService {
 
     @POST("get_queries")
     Call<CommonResponse> getQueries();
+
+    @POST("get_user_queries")
+    Call<CommonResponse> getUserQueries();
 
     @POST("post_query")
     @FormUrlEncoded
@@ -89,4 +94,64 @@ public interface APIService {
     @POST("get_explore_trips")
     @FormUrlEncoded
     Call<CommonResponse> getExploreTrips(@Field("last_created_at") String lastCreatedAt);
+
+    @POST("get_profile")
+    Call<CommonResponse> getProfile();
+
+    @POST("get_expense")
+    @FormUrlEncoded
+    Call<CommonResponse> getExpense(@Field("tripId") Integer tripId);
+
+    @POST("add_expense")
+    @FormUrlEncoded
+    Call<CommonResponse> addExpense(@Field("name") String name,
+                                    @Field("tripId") Integer tripId,
+                                    @Field("price") String price,
+                                    @Field("cash") Integer cash,
+                                    @Field("purchaseDate") String purchaseDate);
+
+    @POST("add_cash")
+    @FormUrlEncoded
+    Call<CommonResponse> addCash(@Field("cashBalance") Double cashBalance,
+                                    @Field("tripId") Integer tripId);
+
+    @Multipart
+    @POST("set_profile")
+    Call<CommonResponse> setProfile(@Part("userName") RequestBody userName,
+                                           @Part("birthDate") RequestBody birthDate,
+                                           @Part MultipartBody.Part profile_image);
+
+    @POST("update_profile")
+    @FormUrlEncoded
+    Call<CommonResponse> updateProfile(@Field("userName") String userName,
+                                 @Field("birthDate") String birthDate);
+
+    @POST("change_password")
+    @FormUrlEncoded
+    Call<CommonResponse> changePassword(@Field("oldPassword") String oldPassword,
+                                       @Field("newPassword") String newPassword);
+
+    @POST("edit_trip")
+    @FormUrlEncoded
+    Call<CommonResponse> editTrip(@Field("tripId") Integer tripId,
+                                    @Field("tripName") String tripName,
+                                    @Field("placeName") String placeName,
+                                    @Field("startDate") String startDate,
+                                    @Field("endDate") String endDate);
+
+    @POST("delete_trip")
+    @FormUrlEncoded
+    Call<CommonResponse> deleteTrip(@Field("tripId") Integer tripId);
+
+    @POST("delete_query")
+    @FormUrlEncoded
+    Call<CommonResponse> deleteQuery(@Field("queryId") Integer queryId);
+
+    @POST("delete_query_reply")
+    @FormUrlEncoded
+    Call<CommonResponse> deleteQueryReply(@Field("queryReplyId") Integer queryReplyId);
+
+    @POST("delete_shopping_item")
+    @FormUrlEncoded
+    Call<CommonResponse> deleteItem(@Field("item_id") Integer item_id);
 }

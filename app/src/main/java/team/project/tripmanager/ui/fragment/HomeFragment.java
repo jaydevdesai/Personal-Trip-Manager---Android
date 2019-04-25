@@ -24,16 +24,16 @@ import team.project.tripmanager.adapter.ViewPagerAdapter;
 import team.project.tripmanager.logger.Logger;
 import team.project.tripmanager.ui.activity.ProfileActivity;
 
+import static android.support.v4.view.PagerAdapter.POSITION_NONE;
+
 public class HomeFragment extends BaseFragment implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     public ViewPager viewPager;
     private BottomNavigationView bottomNavigationView;
     private ViewPagerAdapter viewPagerAdapter;
-    private Logger logger = new Logger(getClass());
     AppCompatTextView topTitleTV;
     AppCompatImageView topTitleIconIV;
     AppCompatImageButton createTripBtn;
-    private ImageButton profieBtn;
 
 
     @Nullable
@@ -47,7 +47,7 @@ public class HomeFragment extends BaseFragment implements BottomNavigationView.O
 
         viewPager = view.findViewById(R.id.viewPager);
         bottomNavigationView = view.findViewById(R.id.bottom_navigation);
-        profieBtn = view.findViewById(R.id.fh_ib_profile);
+        ImageButton profieBtn = view.findViewById(R.id.fh_ib_profile);
         profieBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +68,6 @@ public class HomeFragment extends BaseFragment implements BottomNavigationView.O
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         viewPager.setCurrentItem(viewPagerAdapter.getPosition(R.id.menu_bottom_trips));
 
-
         createTripBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,8 +79,7 @@ public class HomeFragment extends BaseFragment implements BottomNavigationView.O
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         getActivity().getSupportFragmentManager().beginTransaction().remove(createTripFragment).commit();
-                        Objects.requireNonNull(viewPager.getAdapter()).notifyDataSetChanged();
-
+                        viewPager.getAdapter().notifyDataSetChanged();
                     }
                 });
             }
@@ -116,4 +114,5 @@ public class HomeFragment extends BaseFragment implements BottomNavigationView.O
     public void onPageScrollStateChanged(int i) {
 
     }
+
 }

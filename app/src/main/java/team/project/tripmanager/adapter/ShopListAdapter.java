@@ -9,14 +9,18 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import team.project.tripmanager.R;
+import team.project.tripmanager.listener.OnItemDeletedListener;
 import team.project.tripmanager.model.Shopping;
 import team.project.tripmanager.viewholder.ShopListViewHolder;
 
 public class ShopListAdapter extends RecyclerView.Adapter<ShopListViewHolder> {
     private List<Shopping> shoppingList;
-
-    public ShopListAdapter(List<Shopping> shoppingList) {
+    private boolean fromExplore;
+    private OnItemDeletedListener listener;
+    public ShopListAdapter(List<Shopping> shoppingList, boolean fromExplore, OnItemDeletedListener listener) {
         this.shoppingList = shoppingList;
+        this.fromExplore = fromExplore;
+        this.listener = listener;
     }
 
     @NonNull
@@ -32,6 +36,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListViewHolder> {
         Shopping shopping = shoppingList.get(i);
         shopListViewHolder.setItemName(shopping.getItemName());
         shopListViewHolder.setBought(shopping.getBought());
+        shopListViewHolder.initializeLongClick(shopping.getId(),fromExplore,listener);
     }
 
     @Override

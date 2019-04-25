@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/titleText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/rubik_medium"
+        android:gravity="center_vertical|start"
+        android:text="@string/total_cash_taking_to_trip"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/itemNameInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/cashAmountInput"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="8dp"
+        android:theme="@style/TextInputLayoutAppearance"
+        app:errorEnabled="true"
+        app:helperText="@string/required_field"
+        app:layout_constraintBottom_toTopOf="@id/selectPlaceInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleText">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/cashAmountEdt"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/total_cash"
+            android:inputType="numberDecimal"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorPrimaryLight" />
+    </android.support.design.widget.TextInputLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package team.project.tripmanager.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import team.project.tripmanager.ui.fragment.HomeFragment;
 import team.project.tripmanager.ui.fragment.LoginFragment;
 import team.project.tripmanager.R;
 import team.project.tripmanager.model.AuthResponse;
+import team.project.tripmanager.ui.fragment.SetProfileFragment;
 
 public class MainActivity extends BaseActivity {
     @Override
@@ -16,7 +18,12 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         AuthResponse currentAuth = environment.getPrefs().getCurrentAuth();
         Fragment nextFragment;
-        if (currentAuth != null && currentAuth.isSuccess()) {
+        if (currentAuth == null && !environment.getPrefs().getProfile()) {
+            nextFragment = new LoginFragment();
+        } else if(!environment.getPrefs().getProfile()) {
+            nextFragment = new SetProfileFragment();
+        }
+        else if(currentAuth != null && currentAuth.isSuccess()){
             nextFragment = new HomeFragment();
         } else {
             nextFragment = new LoginFragment();
@@ -33,4 +40,6 @@ public class MainActivity extends BaseActivity {
             getSupportFragmentManager().popBackStack();
         }
     }
+
+
 }

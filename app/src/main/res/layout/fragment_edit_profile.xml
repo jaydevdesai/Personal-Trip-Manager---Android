@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <android.support.constraint.ConstraintLayout
+        android:background="@color/colorWhite"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/createTripTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/rubik_medium"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center_vertical|start"
+            android:text="@string/edit_profile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/nameInput"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nameInput"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="8dp"
+            app:errorEnabled="true"
+            app:helperText="@string/required_field"
+            android:theme="@style/TextInputLayoutAppearance"
+            app:layout_constraintTop_toBottomOf="@id/createTripTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/selectPlaceInput">
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/nameEdt"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/enter_name"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorPrimaryLight"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/birthDateInput"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:errorEnabled="true"
+            android:theme="@style/TextInputLayoutAppearance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameInput">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/birthDateEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="@string/birth_date"
+                android:inputType="none"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorPrimaryLight"
+                android:textIsSelectable="false"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:baselineAligned="false"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/birthDateInput">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/cancelBtn"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_toStartOf="@id/updateBtn"
+                android:textAllCaps="true"
+                android:background="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/updateBtn"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/update"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:layout_alignParentEnd="true"
+                android:background="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

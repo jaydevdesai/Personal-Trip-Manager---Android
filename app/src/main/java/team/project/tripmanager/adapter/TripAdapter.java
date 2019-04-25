@@ -19,8 +19,11 @@ import team.project.tripmanager.viewholder.TripViewHolder;
 public class TripAdapter extends RecyclerView.Adapter<TripViewHolder> {
     private List<Trip> trips;
 
-    public TripAdapter(List<Trip> trips) {
+    private boolean fromExplore;
+
+    public TripAdapter(List<Trip> trips, boolean fromExplore) {
         this.trips = trips;
+        this.fromExplore = fromExplore;
     }
 
     @NonNull
@@ -33,6 +36,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TripViewHolder tripViewHolder, int position) {
+        tripViewHolder.setFromExplore(fromExplore);
         Trip trip = trips.get(position);
         tripViewHolder.setTripTitle(trip.getTripName());
         try {

@@ -11,4 +11,6 @@
     <color name="colorWhiteTransparent">#96ffffff</color>
     <color name="colorBlackTransparent">#96000000</color>
     <color name="buttonDisableColor">@android:color/darker_gray</color>
+    <color name="bought">@color/quantum_googgreen</color>
+    <color name="notBought">@color/quantum_vanillared500</color>
 </resources>

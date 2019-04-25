@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.activity.ExpenseManagerActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/expenseLayout"
+        android:layout_width="0dp"
+        android:layout_height="220dp"
+        android:elevation="4dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/appToolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ProgressBar
+            android:id="@+id/leftBar"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progress="10"
+            android:rotation="180"
+            android:progressDrawable="@drawable/rounded_progress_bar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/spentCashMoney"
+            app:layout_constraintEnd_toStartOf="@id/spentCardMoney"
+            app:layout_constraintBottom_toTopOf="@id/totalMoneySpent"
+            app:layout_constraintVertical_chainStyle="packed"/>
+        <ProgressBar
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progress="100"
+            android:rotation="180"
+            android:progressDrawable="@drawable/rounded_progress_bar_shade"
+            app:layout_constraintTop_toTopOf="@id/leftBar"
+            app:layout_constraintStart_toStartOf="@id/leftBar"
+            app:layout_constraintEnd_toEndOf="@id/leftBar"
+            app:layout_constraintBottom_toBottomOf="@id/leftBar"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/leftMoney"
+            android:layout_width="84dp"
+            android:layout_height="wrap_content"
+            android:text="Cash Money\nLeft"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/rubik_medium"
+            app:layout_constraintTop_toTopOf="@id/leftBar"
+            app:layout_constraintStart_toStartOf="@id/leftBar"
+            app:layout_constraintEnd_toEndOf="@id/leftBar"
+            app:layout_constraintBottom_toBottomOf="@id/leftBar"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/spentCashMoney"
+            android:layout_width="84dp"
+            android:layout_height="wrap_content"
+            android:text="Cash Money\nSpent"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/rubik_medium"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/leftBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/spentCardMoney"
+            android:layout_width="84dp"
+            android:layout_height="wrap_content"
+            android:text="Card Money\nSpent"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/rubik_medium"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/leftBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/totalMoneySpent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total\nMoney Spent"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/rubik_medium"
+            app:layout_constraintTop_toBottomOf="@id/leftBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/expensesListView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/expenseLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/loadLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhiteTransparent"
+        android:elevation="5dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <ProgressBar
+            android:id="@+id/contentLoad"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import team.project.tripmanager.R;
+import team.project.tripmanager.listener.OnItemDeletedListener;
 import team.project.tripmanager.model.QueryReply;
 import team.project.tripmanager.module.prefs.MainPrefs;
 import team.project.tripmanager.utils.DateUtils;
@@ -19,9 +20,11 @@ public class QueryRepliesAdapter extends RecyclerView.Adapter<QueryRepliesViewHo
 
     private List<QueryReply> queryReplies;
     private MainPrefs mainPrefs;
-    public QueryRepliesAdapter(List<QueryReply> queryReplies, MainPrefs mainPrefs) {
+    private OnItemDeletedListener listener;
+    public QueryRepliesAdapter(List<QueryReply> queryReplies, MainPrefs mainPrefs, OnItemDeletedListener listener) {
         this.queryReplies = queryReplies;
         this.mainPrefs = mainPrefs;
+        this.listener = listener;
     }
 
     @NonNull
@@ -36,7 +39,10 @@ public class QueryRepliesAdapter extends RecyclerView.Adapter<QueryRepliesViewHo
     public void onBindViewHolder(@NonNull QueryRepliesViewHolder queryRepliesViewHolder, int i) {
         QueryReply queryReply = queryReplies.get(i);
         String name = queryReply.getName();
-        if(queryReply.getEmail() != null && queryReply.getEmail().equals(mainPrefs.getEmail())) name = "You";
+        boolean notYou = true;
+        if(queryReply.getEmail() != null && queryReply.getEmail().equals(mainPrefs.getEmail())) {
+            name = "You"; notYou = false;
+        }
         queryRepliesViewHolder.setName(name);
         queryRepliesViewHolder.setReplyText(queryReply.getReply_text());
         try {
@@ -44,6 +50,7 @@ public class QueryRepliesAdapter extends RecyclerView.Adapter<QueryRepliesViewHo
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        queryRepliesViewHolder.initializeLongClick(queryReply.getId(),notYou,listener);
     }
 
     @Override

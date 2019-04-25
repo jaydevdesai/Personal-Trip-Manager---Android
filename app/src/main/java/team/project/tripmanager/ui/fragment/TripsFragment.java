@@ -55,7 +55,6 @@ public class TripsFragment extends BaseFragment {
         tripsListView.setLayoutManager(layoutManager);
         tripsListView.setItemAnimator(new DefaultItemAnimator());
 
-
         fetchTripsFromServer();
         return v;
     }
@@ -74,11 +73,15 @@ public class TripsFragment extends BaseFragment {
                     logger.debug("response.body() is null");
                     return;
                 }
-                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                TripAdapter tripAdapter = new TripAdapter(response.body().getTrips());
-                errorTxt.setVisibility(View.GONE);
-                tripsListView.setVisibility(View.VISIBLE);
-                tripsListView.setAdapter(tripAdapter);
+                //Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                TripAdapter tripAdapter = new TripAdapter(response.body().getTrips(), false);
+                if(response.body().getTrips().size() == 0){
+                    errorTxt.setVisibility(View.VISIBLE);
+                } else{
+                    errorTxt.setVisibility(View.GONE);
+                    tripsListView.setVisibility(View.VISIBLE);
+                    tripsListView.setAdapter(tripAdapter);
+                }
             }
 
             @Override
@@ -89,5 +92,9 @@ public class TripsFragment extends BaseFragment {
         });
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchTripsFromServer();
+    }
 }

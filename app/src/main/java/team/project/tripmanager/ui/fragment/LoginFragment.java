@@ -88,6 +88,7 @@ public class LoginFragment extends BaseFragment {
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
                 if (response.body() != null) {
                     environment.getPrefs().storeAuthTokenResponse(response.body());
+                    environment.getPrefs().setProfile(true);
                     HomeFragment homeFragment = new HomeFragment();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                     Toast.makeText(getActivity(), "Logged In", Toast.LENGTH_SHORT).show();

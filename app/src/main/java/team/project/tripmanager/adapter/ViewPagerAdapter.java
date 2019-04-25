@@ -2,6 +2,7 @@ package team.project.tripmanager.adapter;
 
 import android.support.annotation.IdRes;
 import android.support.annotation.MenuRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -39,5 +40,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     public int getItemResId(int i) {
         return fragmentIds.get(i);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 }

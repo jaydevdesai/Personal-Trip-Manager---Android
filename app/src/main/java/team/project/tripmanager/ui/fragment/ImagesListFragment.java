@@ -24,7 +24,11 @@ public class ImagesListFragment extends BaseFragment {
     RecyclerView reservationListView;
     private List images;
 
-    public ImagesListFragment(List images) {
+    public ImagesListFragment() {
+
+    }
+
+    public void setImages(List images) {
         this.images = images;
     }
 

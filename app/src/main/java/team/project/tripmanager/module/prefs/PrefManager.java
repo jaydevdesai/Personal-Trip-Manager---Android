@@ -35,6 +35,11 @@ public class PrefManager {
         edit.putString(key, value).apply();
     }
 
+    public void clear(){
+        SharedPreferences.Editor edit = context.getSharedPreferences(prefName, Context.MODE_PRIVATE).edit();
+        edit.clear().apply();
+    }
+
     /**
      * Puts given key-value pair to the Shared Preferences.
      *

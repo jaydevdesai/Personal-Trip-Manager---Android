@@ -34,6 +34,20 @@ public class CommonResponse {
     @Expose
     private Note note;
 
+    @SerializedName("profile")
+    @Expose
+    private Profile profile;
+
+
+    @SerializedName("cash_balance")
+    @Expose
+    private Double cash_balance;
+
+
+    @SerializedName("expenses")
+    @Expose
+    private List<Expense> expenses;
+
     @SerializedName("shopping_list")
     @Expose
     private List<Shopping> shoppingList = null;
@@ -62,6 +76,18 @@ public class CommonResponse {
 
     public Note getNote() {
         return note;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public Double getCash_balance() {
+        return cash_balance;
+    }
+
+    public List<Expense> getExpenses() {
+        return expenses;
     }
 
     public List<Shopping> getShoppingList() {

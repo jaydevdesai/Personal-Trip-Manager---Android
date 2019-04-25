@@ -49,7 +49,7 @@ public class ExploreFragment extends BaseFragment {
 
         exploreTrips = new ArrayList<>();
 
-        tripAdapter = new TripAdapter(exploreTrips);
+        tripAdapter = new TripAdapter(exploreTrips, true);
         postsListView.setAdapter(tripAdapter);
         postsListView.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
             @Override

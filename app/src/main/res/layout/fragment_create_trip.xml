@@ -153,6 +153,7 @@
             android:layout_margin="8dp"
             android:layout_gravity="center"
             android:gravity="center"
+            android:textStyle="bold"
             android:textAllCaps="true"
             android:background="@color/colorWhite"
             android:textColor="@color/colorPrimary"

@@ -9,12 +9,11 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import team.project.tripmanager.listener.OnImagePreparedListener;
 import team.project.tripmanager.logger.Logger;
 
@@ -23,6 +22,7 @@ public class ImageUploadUtils {
     private Context context;
     private OnImagePreparedListener onImagePreparedListener;
     private Logger logger = new Logger(getClass());
+    private Bitmap bitmap;
 
     public ImageUploadUtils(Context context) {
         this.context = context;
@@ -62,28 +62,40 @@ public class ImageUploadUtils {
     }
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode) {
-            case CAMERA:
-                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                uploadImageToServer(thumbnail);
-                break;
-            case GALLERY:
-                Uri contentURI = data.getData();
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), contentURI);
-                    uploadImageToServer(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
+        try {
+            switch (requestCode) {
+                case CAMERA:
+                    Bitmap thumbnail = (Bitmap) (data != null ? data.getExtras().get("data") : null);
+                    uploadImageToServer(thumbnail);
+                    break;
+                case GALLERY:
+                    Uri contentURI = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), contentURI);
+                        uploadImageToServer(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (NullPointerException e ){
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        } catch (NullPointerException e){
+            Toast.makeText(context,"Uploading failed.",Toast.LENGTH_SHORT).show();
         }
     }
 
+    public Bitmap getBitmap(){
+        return bitmap;
+    }
     private void uploadImageToServer(Bitmap bitmap) {
+        this.bitmap = bitmap;
+        Toast.makeText(context, "Prepared.", Toast.LENGTH_SHORT).show();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
         byte[] imageData = outputStream.toByteArray();
-        RequestBody documentImageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageData);
+        ProgressRequestBody documentImageRequestBody = new ProgressRequestBody(imageData,"image");
+        //RequestBody documentImageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageData);
         if (onImagePreparedListener != null) {
             onImagePreparedListener.onImagePrepared(documentImageRequestBody);
         } else {

@@ -17,7 +17,7 @@ public class BaseActivity extends AppCompatActivity {
     protected TMEnvironment environment;
     protected ErrorResponse errorResponse;
     protected Gson gson = new GsonBuilder().setLenient().create();
-    private Logger logger = new Logger(getClass());
+    protected Logger logger = new Logger(getClass());
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -19,11 +19,13 @@ public class BaseFragment extends Fragment {
     protected ErrorResponse errorResponse;
     protected Gson gson = new GsonBuilder().setLenient().create();
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
             environment = ((TMApplication)getActivity().getApplicationContext()).getEnvironment();
+
         }
     }
 

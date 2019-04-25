@@ -16,6 +16,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder {
     AppCompatImageView tripCoverImage;
     AppCompatTextView tripTitleTv, tripDatesTv;
     CardView tripCard;
+    boolean fromExplore;
     public TripViewHolder(@NonNull View itemView) {
         super(itemView);
         tripTitleTv = itemView.findViewById(R.id.tripTitle);
@@ -36,7 +37,12 @@ public class TripViewHolder extends RecyclerView.ViewHolder {
         tripCard.setOnClickListener(view -> {
             Intent intent = new Intent(tripCard.getContext(), TripDetailsActivity.class);
             intent.putExtra("TripDetails", trip);
+            intent.putExtra("fromExplore", fromExplore);
             tripCard.getContext().startActivity(intent);
         });
+    }
+
+    public void setFromExplore(boolean fromExplore) {
+        this.fromExplore = fromExplore;
     }
 }

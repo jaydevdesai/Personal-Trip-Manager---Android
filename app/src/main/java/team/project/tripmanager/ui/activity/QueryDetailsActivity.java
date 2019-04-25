@@ -1,6 +1,7 @@
 package team.project.tripmanager.ui.activity;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
@@ -28,6 +29,7 @@ import team.project.tripmanager.R;
 import team.project.tripmanager.adapter.QueryRepliesAdapter;
 import team.project.tripmanager.core.TMApplication;
 import team.project.tripmanager.core.TMEnvironment;
+import team.project.tripmanager.listener.OnItemDeletedListener;
 import team.project.tripmanager.model.CommonResponse;
 import team.project.tripmanager.model.ErrorResponse;
 import team.project.tripmanager.model.Query;
@@ -35,18 +37,16 @@ import team.project.tripmanager.module.prefs.MainPrefs;
 import team.project.tripmanager.ui.fragment.BaseFragment;
 import team.project.tripmanager.utils.DateUtils;
 
-public class QueryDetailsActivity extends BaseActivity {
+public class QueryDetailsActivity extends BaseActivity implements OnItemDeletedListener {
 
     AppCompatTextView userNameTV, queryTextTV, queryDate;
     AppCompatImageView userPicIV;
-    AppCompatImageButton postReplyBtn;
+    AppCompatImageButton postReplyBtn, deleteBtn;
     AppCompatEditText replyEdt;
     RecyclerView repliesListView;
     private Query query;
     private static MainPrefs mainPrefs;
     TMEnvironment tmEnvironment;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +61,37 @@ public class QueryDetailsActivity extends BaseActivity {
         queryTextTV = findViewById(R.id.queryText);
         userPicIV = findViewById(R.id.userPic);
         replyEdt = findViewById(R.id.replyEdt);
+        deleteBtn = findViewById(R.id.deleteQueryBtn);
         postReplyBtn = findViewById(R.id.postReplyBtn);
         repliesListView = findViewById(R.id.repliesListView);
 
         String name = query.getName();
-        if(Objects.requireNonNull(mainPrefs.getEmail()).equals(query.getEmail())) name = "You";
+        if(Objects.requireNonNull(mainPrefs.getEmail()).equals(query.getEmail())) {
+            name = "You";
+        } else {
+            deleteBtn.setVisibility(View.GONE);
+        }
         userNameTV.setText(name);
         queryTextTV.setText(query.getQueryText());
         try {
-            queryDate.setText(DateUtils.getFormattedDate(query.getCreationTime(),"dd MMM yy HH:mm aa"));
+            queryDate.setText(DateUtils.getFormattedDate(query.getCreationTime(),"dd MMM yy"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        deleteBtn.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage("Are you sure you want to delete this query?");
+            alertDialogBuilder.setPositiveButton("YES", (arg0, arg1) -> {
+                deleteQueryRequestToServer(query.getQueryId());
+            });
+
+            alertDialogBuilder.setNegativeButton("NO", null
+            );
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        });
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         repliesListView.setLayoutManager(layoutManager);
@@ -94,7 +113,7 @@ public class QueryDetailsActivity extends BaseActivity {
             @Override
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 if(response.isSuccessful() && response.body() != null){
-                    QueryRepliesAdapter queryRepliesAdapter = new QueryRepliesAdapter(response.body().getQueryReplies(),mainPrefs);
+                    QueryRepliesAdapter queryRepliesAdapter = new QueryRepliesAdapter(response.body().getQueryReplies(),mainPrefs, QueryDetailsActivity.this);
                     repliesListView.setAdapter(queryRepliesAdapter);
                 } else {
                     try {
@@ -140,5 +159,39 @@ public class QueryDetailsActivity extends BaseActivity {
                 Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void deleteQueryRequestToServer(Integer queryId){
+
+        environment.getAPIService().deleteQuery(queryId).enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(QueryDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                } else if(response.errorBody() != null){
+                    try {
+                        errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                        Toast.makeText(QueryDetailsActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    logger.debug("Unsuccessful response");
+                    Toast.makeText(QueryDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                logger.error(t);
+                Toast.makeText(QueryDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onDeleted() {
+        fetchQueryRepliesFromServer();
     }
 }

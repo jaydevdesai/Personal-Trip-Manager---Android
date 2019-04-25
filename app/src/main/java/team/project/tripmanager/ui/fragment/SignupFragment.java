@@ -94,8 +94,9 @@ public class SignupFragment extends BaseFragment {
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 if (response.body() != null) {
                     environment.getPrefs().storeAuthTokenResponse(response.body());
-                    HomeFragment homeFragment = new HomeFragment();
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                    environment.getPrefs().setProfile(false);
+                    SetProfileFragment setProfileFragment = new SetProfileFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, setProfileFragment).commit();
                     Toast.makeText(getActivity(), "Sign up Successful", Toast.LENGTH_SHORT).show();
                 } else if(response.errorBody() != null){
                     try {

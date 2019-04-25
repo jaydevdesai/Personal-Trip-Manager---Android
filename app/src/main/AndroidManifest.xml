@@ -19,6 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+        <activity android:name=".ui.activity.UserQueryActivity" />
+        <activity android:name=".ui.activity.ExpenseManagerActivity" />
         <activity
             android:name=".ui.activity.ShoppingListActivity"
             android:label="@string/title_activity_shopping_list"

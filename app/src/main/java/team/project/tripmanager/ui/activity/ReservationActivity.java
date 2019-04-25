@@ -1,5 +1,6 @@
 package team.project.tripmanager.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,7 +25,10 @@ import team.project.tripmanager.logger.Logger;
 import team.project.tripmanager.model.CommonResponse;
 import team.project.tripmanager.model.Reservation;
 import team.project.tripmanager.ui.fragment.ImagesListFragment;
+import team.project.tripmanager.ui.fragment.UploadDocumentFragment;
+import team.project.tripmanager.ui.fragment.UploadReservationFragment;
 import team.project.tripmanager.utils.ImageUploadUtils;
+import team.project.tripmanager.utils.ProgressRequestBody;
 
 public class ReservationActivity extends BaseActivity {
 
@@ -33,6 +37,7 @@ public class ReservationActivity extends BaseActivity {
     private Logger logger = new Logger(getClass());
     private ImageUploadUtils imageUploadUtils;
     private Integer tripId;
+    private boolean fromExplore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +45,26 @@ public class ReservationActivity extends BaseActivity {
         setContentView(R.layout.activity_images);
         page = getIntent().getStringExtra("page");
         tripId = getIntent().getIntExtra("tripId", 0);
+        fromExplore = getIntent().getBooleanExtra("fromExplore", false);
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Your " + page);
         imageUploadUtils = new ImageUploadUtils(this);
         imageUploadUtils.setOnImagePreparedListener(new OnImagePreparedListener() {
             @Override
-            public void onImagePrepared(RequestBody imageRequetBody) {
-                uploadReservationToServer(imageRequetBody);
+            public void onImagePrepared(ProgressRequestBody imageRequestBody) {
+                UploadReservationFragment uploadReservationFragment = UploadReservationFragment.newInstance();
+                uploadReservationFragment.setImageUploadUtils(imageUploadUtils);
+                uploadReservationFragment.setProgressRequestBody(imageRequestBody);
+                uploadReservationFragment.setTripId(tripId);
+                uploadReservationFragment.show(getSupportFragmentManager(),"uploadReservation");
+                getSupportFragmentManager().executePendingTransactions();
+                uploadReservationFragment.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        getSupportFragmentManager().beginTransaction().remove(uploadReservationFragment).commit();
+                        fetchReservationsFromServer();
+                    }
+                });
             }
         });
         setSupportActionBar(toolbar);
@@ -61,12 +79,14 @@ public class ReservationActivity extends BaseActivity {
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 if (!response.isSuccessful()) {
                     showSomethingWentWrong();
-                    logger.debug("response not successfull");
+                    logger.debug("response not successful");
                     return;
                 }
                 if (response.body() != null && response.body().getReservations() != null) {
                     List<Reservation> reservations = response.body().getReservations();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.reserveContainer, new ImagesListFragment(reservations)).commit();
+                    ImagesListFragment imagesListFragment = new ImagesListFragment();
+                    imagesListFragment.setImages(reservations);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.reserveContainer, imagesListFragment).commitAllowingStateLoss();
                 } else {
                     logger.debug("getReservations null");
                 }
@@ -80,31 +100,7 @@ public class ReservationActivity extends BaseActivity {
         });
     }
 
-    private void uploadReservationToServer(RequestBody imageRequetBody) {
-        MultipartBody.Part reservationImageMutlipartBody = MultipartBody.Part.createFormData("reservation_image", "upload" + new Random().nextInt() + ".jpg", imageRequetBody);
-        RequestBody reservationNameRequestBody = RequestBody.create(MediaType.parse("text/plain"), "Test Reservation");
-        RequestBody tripIdRequestBody = RequestBody.create(MediaType.parse("text/plain"), tripId.toString());
 
-        environment.getAPIService().uploadReservation(tripIdRequestBody, reservationNameRequestBody, reservationImageMutlipartBody).enqueue(new Callback<CommonResponse>() {
-            @Override
-            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
-                if (!response.isSuccessful()) {
-                    showSomethingWentWrong();
-                    logger.debug("unsuccessfull response");
-                    return;
-                } else {
-                    Toast.makeText(ReservationActivity.this, "Reservation uploaded", Toast.LENGTH_SHORT).show();
-                    fetchReservationsFromServer();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CommonResponse> call, Throwable t) {
-                showSomethingWentWrong();
-                logger.error(t);
-            }
-        });
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -129,7 +125,9 @@ public class ReservationActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_new, menu);
+        if (!fromExplore) {
+            getMenuInflater().inflate(R.menu.add_new, menu);
+        }
         return true;
     }
 }

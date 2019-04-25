@@ -1,6 +1,7 @@
 package team.project.tripmanager.module.prefs;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -67,6 +68,17 @@ public class MainPrefs {
             return null;
         }
         return gson.fromJson(json, AuthResponse.class);
+    }
+
+    public void setProfile(boolean val){
+        pref.put("profile", val);
+    }
+
+    public boolean getProfile(){
+        return pref.getBoolean("profile", false);
+    }
+    public void deletePref(){
+        pref.clear();
     }
 }
 

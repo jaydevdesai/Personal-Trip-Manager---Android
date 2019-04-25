@@ -10,6 +10,7 @@ import android.view.View;
 
 import team.project.tripmanager.R;
 import team.project.tripmanager.ui.activity.DocumentsActivity;
+import team.project.tripmanager.ui.activity.ExpenseManagerActivity;
 import team.project.tripmanager.ui.activity.NoteActivity;
 import team.project.tripmanager.ui.activity.ReservationActivity;
 import team.project.tripmanager.ui.activity.ShoppingListActivity;
@@ -35,7 +36,7 @@ public class TripDetailsViewHolder extends RecyclerView.ViewHolder {
         cardImage.setImageResource(image);
     }
 
-    public void initiateClick(String page, Integer tripId){
+    public void initiateClick(String page, Integer tripId, boolean fromExplore){
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,21 +46,31 @@ public class TripDetailsViewHolder extends RecyclerView.ViewHolder {
                         intent = new Intent(cardView.getContext(), ReservationActivity.class);
                         intent.putExtra("page", page);
                         intent.putExtra("tripId", tripId);
+                        intent.putExtra("fromExplore", fromExplore);
                         cardView.getContext().startActivity(intent);
                         break;
                     case "Documents":
                         intent = new Intent(cardView.getContext(), DocumentsActivity.class);
                         intent.putExtra("page", page);
+                        intent.putExtra("fromExplore", fromExplore);
                         cardView.getContext().startActivity(intent);
                         break;
                     case "Notes" :
                         intent = new Intent(cardView.getContext(), NoteActivity.class);
                         intent.putExtra("tripId", tripId);
+                        intent.putExtra("fromExplore", fromExplore);
                         cardView.getContext().startActivity(intent);
                         break;
                     case "Shopping-List" :
                         intent = new Intent(cardView.getContext(), ShoppingListActivity.class);
                         intent.putExtra("tripId", tripId);
+                        intent.putExtra("fromExplore", fromExplore);
+                        cardView.getContext().startActivity(intent);
+                        break;
+                    case "Expenses" :
+                        intent = new Intent(cardView.getContext(), ExpenseManagerActivity.class);
+                        intent.putExtra("tripId", tripId);
+                        intent.putExtra("fromExplore", fromExplore);
                         cardView.getContext().startActivity(intent);
                         break;
                     default:

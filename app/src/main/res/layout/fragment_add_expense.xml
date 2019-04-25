@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:background="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/titleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="center_vertical|start"
+            android:text="@string/add_expense"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/nameInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nameInput"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="8dp"
+            android:theme="@style/TextInputLayoutAppearance"
+            app:errorEnabled="true"
+            app:helperText="@string/required_field"
+            app:layout_constraintBottom_toTopOf="@id/amountInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleText"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/nameEdt"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/name"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorPrimaryLight" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/amountInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:errorEnabled="true"
+            app:helperText="@string/required_field"
+            android:theme="@style/TextInputLayoutAppearance"
+            app:layout_constraintTop_toBottomOf="@id/nameInput"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/dateInput"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/amountEdt"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorPrimaryLight"
+                android:textAllCaps="false"
+                android:inputType="numberDecimal"
+                android:hint="@string/amount"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dateInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:errorEnabled="true"
+            app:helperText="@string/required_field"
+            android:theme="@style/TextInputLayoutAppearance"
+            app:layout_constraintTop_toBottomOf="@id/amountInput"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cashRadio"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/dateEdt"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:textIsSelectable="false"
+                android:focusable="false"
+                android:clickable="true"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorPrimaryLight"
+                android:textAllCaps="false"
+                android:hint="@string/date" />
+        </android.support.design.widget.TextInputLayout>
+
+        <RadioGroup
+            android:id="@+id/cashRadio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/dateInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
+            app:layout_constraintVertical_chainStyle="packed">
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/cashRd"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:buttonTint="@color/colorAccent"
+                android:text="@string/cash"
+                android:checked="true"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"/>
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/cardRd"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:buttonTint="@color/colorAccent"
+                android:text="@string/card"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"/>
+        </RadioGroup>
+
+        <RelativeLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@color/colorWhite"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/cashRadio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/cancelBtn"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_toStartOf="@id/addBtn"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/addBtn"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="8dp"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:text="@string/add"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

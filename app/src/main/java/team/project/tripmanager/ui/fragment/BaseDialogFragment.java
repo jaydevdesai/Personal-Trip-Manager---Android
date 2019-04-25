@@ -21,7 +21,7 @@ import team.project.tripmanager.model.ErrorResponse;
 public class BaseDialogFragment extends DialogFragment {
 
     protected TMEnvironment environment;
-    private Logger logger = new Logger(getClass());
+    protected Logger logger = new Logger(getClass());
     protected ErrorResponse errorResponse;
     protected Gson gson = new GsonBuilder().setLenient().create();
 

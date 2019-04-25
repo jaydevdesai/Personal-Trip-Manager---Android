@@ -99,6 +99,30 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/deleteTripBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:scaleType="fitCenter"
+        android:padding="8dp"
+        android:tint="@color/colorWhite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/goBackBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:scaleType="fitCenter"
+        android:padding="8dp"
+        android:tint="@color/colorWhite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardsList"
         android:scrollbars="vertical"
